@@ -1,0 +1,45 @@
+.navbar-header-container {
+  //padding: 10px;
+  background-color: #b82121;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  justify-content: space-between;
+  height: 100px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  p {
+    font-size: 40px;
+  }
+}
+
+.logo-icon {
+  padding: 0 0 0 10px;
+  margin-right: 10px;
+  size: 50px;
+  inline-size: 80px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.auth-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  .sign-in,
+  .log-in {
+    border-radius: 15px;
+    padding: 8px 16px;
+    background-color: white;
+    color: #b82121;
+    font-size: 24px;
+    white-space: nowrap;
+  }
+}
