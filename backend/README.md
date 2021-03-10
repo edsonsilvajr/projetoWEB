@@ -1,6 +1,10 @@
 # BACKEND
 
 Para rodar a API do backend, seguir os seguintes passos (considerando que você clonou o repositório na htdocs do xampp)
+
+# Habilitar o módulo de mod_rewrite dentro do xampp
+
+Seguir os passos disponíveis no link para habilitar o mod_rewrite caso esteja desabilitado: https://www.phpflow.com/php/how-to-enable-mod_rewrite-module-in-apache/
 # Criar arquivo .htaccess na raiz do xampp (htdocs no caso)
 Criar um arquivo `.htaccess` na pasta htdocs, contendo o seguinte conteúdo:
 ```
