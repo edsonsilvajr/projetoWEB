@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import './styles.scss'
 import logo from '../../assets/logo-icon.svg'
 import userIcon from '../../assets/user-icon.svg'
+import searchIcon from '../../assets/search-icon.svg'
 import { Link } from 'react-router-dom'
 
 interface Props {
@@ -104,7 +105,10 @@ const Navbar = () => {
         <img src={logo} alt="logo" className="logo-icon" />
         <p>RANDOM KITCHEN</p>
       </Link>
-      <div className="search-bar">search</div>
+      <div className="search-bar">
+        <input type="text" className="search" placeholder="Busque sua receita"/>
+        <button className="searchButton"><img src={searchIcon} alt="Icone de pesquisa"/></button>
+      </div>
       <UserControl condition={condition} />
     </div>
   )

@@ -1,8 +1,11 @@
 @import url(https://db.onlinewebfonts.com/c/a163d087c4bfdff182eb1b4fcc595798?family=Sansation);
+*{
+  
+  font-family: Sansation;
+}
 
 body {
   margin: 0;
-  font-family: Sansation;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
