@@ -6,14 +6,22 @@
   align-items: center;
   color: white;
   justify-content: space-between;
-  height: 100px;
+  height: 80px;
 }
 
 .logo {
   display: flex;
   flex-direction: row;
+  width: 40%;
+  white-space: nowrap;
+  cursor: default;
+  img {
+    inline-size: 64px;
+    cursor: pointer;
+  }
   p {
-    font-size: 40px;
+    font-size: 32px;
+    cursor: pointer;
   }
 }
 
@@ -33,13 +41,85 @@ a {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  width: 20%;
+  justify-content: center;
   .sign-in,
   .log-in {
-    border-radius: 15px;
+    border-radius: 10px;
+    margin: 0 10px;
     padding: 8px 16px;
     background-color: white;
     color: #b82121;
-    font-size: 24px;
+    font-size: 18px;
     white-space: nowrap;
   }
+}
+
+.user-wrapper {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  cursor: default;
+
+  .user {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+  }
+
+  img {
+    inline-size: 48px;
+    margin-right: 12px;
+    user-select: none;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    p {
+      margin: 2.5px 0px;
+    }
+    p:first-child {
+      font-weight: bold;
+    }
+  }
+
+  .user-settings {
+    cursor: default;
+    background-color: #ca5959;
+    height: fit-content;
+    width: 200px;
+    position: absolute;
+    top: 60px;
+    border-radius: 15px;
+    padding: 30px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    p {
+      margin: 0 0 30px 30px;
+      cursor: pointer;
+    }
+    .log-out {
+      align-self: center;
+      border: 1px solid white;
+      border-radius: 10px;
+      padding: 15px 20px;
+      transition: 0.2s;
+      user-select: none;
+    }
+
+    .log-out:hover {
+      background-color: white;
+      color: #b82121;
+    }
+  }
+}
+
+.search-bar {
+  width: 40%;
 }
