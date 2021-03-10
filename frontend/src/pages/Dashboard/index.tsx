@@ -1,7 +1,8 @@
 import React from 'react'
+import Card from '../../components/Card'
 
 const Dashboard = () => {
-  return <div>Hello World!</div>
+  return <Card />
 }
 
 export default Dashboard

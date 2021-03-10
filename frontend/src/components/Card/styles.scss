@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card{
+    border-radius: 15px;
+    overflow: hidden;
+    width: 275px;
+    background-color: #EEC8C8;
+}
+
+.receitaImg{
+    width: 100%;
+    height: auto;
+}
+
+.footerCard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px 6px;
+    width: 100%;
+}
+
+
+.heartIcon{
+    height: 30px;
+    width: 30px;
+}
+
+.heartIcon:hover{
+    cursor: pointer;
+}
