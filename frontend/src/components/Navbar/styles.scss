@@ -7,6 +7,8 @@
   color: white;
   justify-content: space-between;
   height: 80px;
+  position: sticky;
+  top: 0;
 }
 
 .logo {
@@ -129,7 +131,7 @@ a {
   //width: fit-content;
 }
 
-.search{
+.search {
   width: 100%;
   padding: 10px 15px;
   border-radius: 100px;
@@ -137,9 +139,9 @@ a {
   border: none;
 }
 
-.searchButton{
+.searchButton {
   margin-left: -35px;
-  background-color: #B82121;
+  background-color: #b82121;
   outline: none;
   border: none;
   display: flex;
@@ -148,7 +150,7 @@ a {
   border-radius: 9999px;
   height: 33px;
   width: 33px;
-  img{
+  img {
     inline-size: 25px;
   }
 }

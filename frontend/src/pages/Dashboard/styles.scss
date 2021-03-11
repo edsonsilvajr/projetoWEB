@@ -1,0 +1,19 @@
+.dashboard-container {
+  min-height: calc(100vh - 80px);
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('../../assets/dashboard-background.svg');
+  background-color: #ff000034;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.card-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+  justify-items: center;
+}

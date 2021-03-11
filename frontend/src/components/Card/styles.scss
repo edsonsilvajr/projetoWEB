@@ -1,36 +1,47 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.card{
-    border-radius: 15px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-    width: 275px;
-    background-color: #EEC8C8;
+.card {
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  width: 275px;
+  background-color: #eec8c8;
 }
 
-.receitaImg{
-    width: 100%;
-    height: auto;
+.card-title {
+  color: black;
+  font-size: 24px;
+  font-weight: 1000;
+  transition: 0.2s;
 }
 
-.footerCard{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 12px 6px;
-    width: 100%;
+.card-title:hover {
+  color: #b82121;
 }
 
-.heartIcon{
-    height: 30px;
-    width: 30px;
+.receitaImg {
+  width: 100%;
+  height: auto;
 }
 
-.heartIcon:hover{
-    cursor: pointer;
+.footerCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px 6px;
+  width: 100%;
+}
+
+.heartIcon {
+  height: 30px;
+  width: 30px;
+}
+
+.heartIcon:hover {
+  cursor: pointer;
 }
