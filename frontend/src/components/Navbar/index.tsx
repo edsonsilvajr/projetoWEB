@@ -22,7 +22,6 @@ const Navbar = () => {
     useEffect(() => {
       const handleClickOutside = (event: Event) => {
         if (ref.current && !ref.current.contains(event.target)) {
-          console.log(ref)
           setModalOpen(!modalOpen)
         }
       }
@@ -58,16 +57,10 @@ const Navbar = () => {
   }
 
   const UserControl = ({ condition }: Props) => {
-    if (condition) {
+    if (!condition) {
       return (
         <div className="auth-wrapper">
-          <Link
-            to="/"
-            className="log-in"
-            onClick={() => {
-              setCondition(!condition)
-            }}
-          >
+          <Link to="/login" className="log-in">
             Log in
           </Link>
           <Link to="/" className="sign-in">
@@ -106,8 +99,14 @@ const Navbar = () => {
         <p>RANDOM KITCHEN</p>
       </Link>
       <div className="search-bar">
-        <input type="text" className="search" placeholder="Busque sua receita"/>
-        <button className="searchButton"><img src={searchIcon} alt="Icone de pesquisa"/></button>
+        <input
+          type="text"
+          className="search"
+          placeholder="Busque sua receita"
+        />
+        <button className="searchButton">
+          <img src={searchIcon} alt="Icone de pesquisa" />
+        </button>
       </div>
       <UserControl condition={condition} />
     </div>

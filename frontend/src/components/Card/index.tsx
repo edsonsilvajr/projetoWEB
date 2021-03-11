@@ -30,9 +30,14 @@ function Card({ card }: Props) {
     return heartIcon
   }
 
+  //define se o coração vai existir ou não, pegar futuramente do context API/ Redux
+  const user = true
+
   return (
     <div className="card">
-      <img src={card.url} className="receitaImg" alt="Imagem receita" />
+      <Link to={`/recipe/${card.title}`}>
+        <img src={card.url} className="receitaImg" alt="Imagem receita" />
+      </Link>
       <div className="footerCard">
         <div className="footerLeft">
           <Link to={`/recipe/${card.title}`} className="card-title">
@@ -40,14 +45,16 @@ function Card({ card }: Props) {
           </Link>
           <p>{card.description}</p>
         </div>
-        <img
-          src={handleHover()}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-          onClick={() => setFavorite(!favorite)}
-          className="heartIcon"
-          alt="Icone de favorito"
-        />
+        {user && (
+          <img
+            src={handleHover()}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            onClick={() => setFavorite(!favorite)}
+            className="heartIcon"
+            alt="Icone de favorito"
+          />
+        )}
       </div>
     </div>
   )
