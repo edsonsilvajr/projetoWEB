@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import Background from '../../components/Background'
 import Card from '../../components/Card'
 import './styles.scss'
+
+//importing MOCK
+import { arrayCards } from './data'
 
 interface ICard {
   url: string
@@ -9,32 +13,16 @@ interface ICard {
 }
 
 const Dashboard = () => {
-  const [cards, setCards] = useState<ICard[]>([])
-  useEffect(() => {
-    const card1 = {
-      url:
-        'https://diaonline.ig.com.br/wp-content/uploads/2020/07/comida-caseira-brasilia_capa-1024x683.jpg',
-      title: 'titulo qualquer',
-      description: 'descrição',
-    }
-    const card2 = {
-      url:
-        'https://img.itdg.com.br/tdg/images/blog/uploads/2017/07/shutterstock_413580649-300x200.jpg',
-      title: 'titulo 2qualquer',
-      description: 'descrição2',
-    }
-    const arrayCards = [card1, card2]
-    setCards(arrayCards)
-  }, [])
+  const [cards, setCards] = useState<ICard[]>(arrayCards)
 
   return (
-    <div className="dashboard-container">
+    <Background>
       <div className="card-row">
         {cards.map((element) => (
           <Card key={element.title} card={element} />
         ))}
       </div>
-    </div>
+    </Background>
   )
 }
 

@@ -1,0 +1,27 @@
+.background-default,
+.background-option1,
+.background-option2 {
+  min-height: calc(100vh - 80px);
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.background-default {
+  background-image: url('../../assets/dashboard-background.svg');
+}
+
+.background-option1 {
+  background-image: url('../../assets/background-option1.svg');
+}
+
+.background-option2 {
+  background-image: url('../../assets/dashboard-background.svg');
+}
+
+.center {
+  justify-content: center;
+}
