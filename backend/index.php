@@ -1,8 +1,16 @@
 <?php
 // API Web Simples
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+
 $recurso = $_SERVER['REQUEST_URI'] ?? 'index';
 $metodo = $_SERVER['REQUEST_METHOD'] ?? 'GET';
-$controlador = ".$recurso.controller.php";
+
+$recurso = explode('?', $recurso);
+$url = $recurso[0];
+$query = $recurso[1] ?? null;
+
+$controlador = ".$url.controller.php";
 
 if (file_exists($controlador)) {
     require($controlador);
