@@ -7,6 +7,7 @@ import heartFavorite from '../../assets/heart-favorito.svg'
 import { Link } from 'react-router-dom'
 
 interface Card {
+  id: number
   url: string
   title: string
   description: string
@@ -35,12 +36,12 @@ function Card({ card }: Props) {
 
   return (
     <div className="card">
-      <Link to={`/recipe/${card.title}`}>
+      <Link to={`/recipe/${card.id}`}>
         <img src={card.url} className="receitaImg" alt="Imagem receita" />
       </Link>
       <div className="footerCard">
         <div className="footerLeft">
-          <Link to={`/recipe/${card.title}`} className="card-title">
+          <Link to={`/recipe/${card.id}`} className="card-title">
             {card.title}
           </Link>
           <p>{card.description}</p>

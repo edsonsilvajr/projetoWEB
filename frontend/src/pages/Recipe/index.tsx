@@ -1,21 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouteMatch } from 'react-router'
 import Background from '../../components/Background'
 import './styles.scss'
 
 //importando MOCK
 import { arrayCards } from './data'
+import axios from 'axios'
 
 interface Params {
   recipe_id: string
 }
 
+interface Recipe {
+  recipe_id: string
+  author: string
+  url: string
+  title: string
+  description: string
+  ingredients: string
+  preparationMode: string
+}
+
 function Recipe() {
   const { params } = useRouteMatch<Params>()
+  const [toShow, setToShow] = useState<Recipe>()
 
-  const toShow = arrayCards.find(
-    (element) => element.recipe_id === params.recipe_id
-  )
+  useEffect(() => {
+    axios
+      .get(`http://localhost/api/recipe`, {
+        params: { getParam: 1, id: params.recipe_id },
+      })
+      .then((response) => {
+        console.log(response.data)
+        setToShow(response.data)
+      })
+  }, [])
 
   return (
     <Background>
