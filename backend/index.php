@@ -1,7 +1,7 @@
 <?php
 // API Web Simples
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Origin: *"); // CORS
+header("Access-Control-Allow-Headers: *"); // CORS
 
 $recurso = $_SERVER['REQUEST_URI'] ?? 'index';
 $metodo = $_SERVER['REQUEST_METHOD'] ?? 'GET';
