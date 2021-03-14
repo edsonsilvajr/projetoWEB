@@ -51,14 +51,28 @@ if (str_contains($metodo, 'POST')) {
     $indice = array_search($_GET['uid'], array_column($usuarios, 'uid'));
     $usuario = json_decode(file_get_contents('php://input'), true);
 
-    if ($indice || $indice === 0) {
-        $usuarios[$indice] = $usuario;
-        $usuarios[$indice]['uid'] = (int)$_GET['uid'];
-        file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
-        echo json_encode($usuarios);
-    } else { // 404 not found
-        http_response_code(404);
-        echo "not found";
+    switch ($_GET['getParam']) {
+        case '1': // updating entire user
+            if ($indice || $indice === 0) {
+                $usuarios[$indice] = $usuario;
+                $usuarios[$indice]['uid'] = (int)$_GET['uid'];
+                file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
+                echo json_encode($usuarios);
+            } else { // 404 not found
+                http_response_code(404);
+                echo "not found";
+            }
+            break;
+        case '2': //updating favorites list
+            if ($indice || $indice === 0) {
+                $usuarios[$indice]['favorites'] = $usuario['favorites'];
+                file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
+                echo json_encode($usuarios);
+            } else { // 404 not found
+                http_response_code(404);
+                echo "not found";
+            }
+            break;
     }
 } else if (str_contains($metodo, 'DELETE')) {
     $indice = array_search($_GET['uid'], array_column($usuarios, 'uid'));
