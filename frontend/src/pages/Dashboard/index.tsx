@@ -3,28 +3,28 @@ import Background from '../../components/Background'
 import Card from '../../components/Card'
 import './styles.scss'
 import api from '../../services/api'
-
-interface ICard {
-  id: number
-  url: string
-  title: string
-  description: string
-}
+import { useSelector } from 'react-redux'
+import { IUser } from '../../interfaces/User.model'
+import { ICard } from '../../interfaces/Card.model'
 
 const Dashboard = () => {
+  const user = useSelector((state) => state) as IUser
   const [cards, setCards] = useState<ICard[]>([])
-
   useEffect(() => {
     api.get('recipe', { params: { getParam: 2 } }).then((response) => {
       setCards(response.data)
     })
   }, [])
 
+  const check = (elementID: number) => {
+    return user?.favorites.includes(elementID)
+  }
+
   return (
     <Background>
       <div className="card-row">
         {cards.map((element) => (
-          <Card key={element.id} card={element} />
+          <Card key={element.id} card={element} fav={check(element.id)} />
         ))}
       </div>
     </Background>
