@@ -22,8 +22,14 @@ if (str_contains($metodo, 'POST')) {
         file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
         echo json_encode($usuarios);
     } else { // Email
-        http_response_code(404);
-        echo "Email already linked to an account";
+        $message = [
+            "data" => [],
+            "status" => "conflict",
+            "errors" => "Email already registered"
+        ];
+        http_response_code(409);
+        header('Content-Type: application/json');
+        echo json_encode($message);
     }
 } else if (str_contains($metodo, 'GET')) {
     $indice = array_search($_GET['uid'] ?? null, array_column($usuarios, 'uid'));
@@ -52,7 +58,7 @@ if (str_contains($metodo, 'POST')) {
 } else if (str_contains($metodo, 'DELETE')) {
     $indice = array_search($_GET['uid'], array_column($usuarios, 'uid'));
     if ($indice || $indice === 0) {
-        array_splice($usuarios, $indice);
+        unset($usuarios[$indice]);
         file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
         echo json_encode($usuarios);
     } else {

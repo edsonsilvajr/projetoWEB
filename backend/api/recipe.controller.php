@@ -98,7 +98,7 @@ if (str_contains($metodo, 'POST')) {
 } else if (str_contains($metodo, 'DELETE')) {
     $indice = array_search($_GET['id'], array_column($receitas, 'id'));
     if ($indice || $indice === 0) {
-        array_splice($receitas, $indice);
+        unset($receitas[$indice]);
         file_put_contents($file_path, json_encode($receitas)); // escrevendo no arquivo
         echo json_encode($receitas);
     } else {
