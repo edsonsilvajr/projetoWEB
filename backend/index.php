@@ -2,6 +2,7 @@
 // API Web Simples
 header("Access-Control-Allow-Origin: *"); // CORS
 header("Access-Control-Allow-Headers: *"); // CORS
+header("Access-Control-Allow-Methods: POST, PUT, GET, DELETE");
 
 $recurso = $_SERVER['REQUEST_URI'] ?? 'index';
 $metodo = $_SERVER['REQUEST_METHOD'] ?? 'GET';
