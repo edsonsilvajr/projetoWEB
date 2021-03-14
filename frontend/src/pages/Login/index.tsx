@@ -1,17 +1,19 @@
-import axios from 'axios'
 import { Formik } from 'formik'
-import React, { FormEvent, useState } from 'react'
+import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Background from '../../components/Background'
 import api from '../../services/api'
+import { useDispatch } from 'react-redux'
 import './styles.scss'
 import * as yup from 'yup'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import jwt_decode from 'jwt-decode'
 
 //TODO: atribuir dados para os inputs
 
 function Login() {
+  const dispatch = useDispatch()
   const history = useHistory()
   const userSchema = yup.object().shape({
     email: yup.string().email().required(),
@@ -29,6 +31,7 @@ function Login() {
               const data = res.data.data
               localStorage.setItem('jw_token', data.token)
               setSubmitting(false)
+              dispatch({ type: 'SET_USER', payload: jwt_decode(data.token) })
               history.push('/')
             },
             (err) => {

@@ -17,7 +17,12 @@ if (str_contains($metodo, 'POST')) {
             $header = json_encode($header);
             $header = base64_encode($header);
 
-            $payload = ["user_email" => $users[$user_index]['email']];
+            $payload = [
+                'uid' => $users[$user_index]['uid'],
+                'name' => $users[$user_index]['name'],
+                'type' => $users[$user_index]['type'],
+                'favorites' => $users[$user_index]['favorites']
+            ];
             $payload = json_encode($payload);
             $payload = base64_encode($payload);
 

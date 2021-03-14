@@ -5,21 +5,15 @@ import heartIcon from '../../assets/heart-icon.svg'
 import heartHover from '../../assets/heart-hover.svg'
 import heartFavorite from '../../assets/heart-favorito.svg'
 import { Link } from 'react-router-dom'
-
-interface Card {
-  id: number
-  url: string
-  title: string
-  description: string
-}
-
+import { ICard } from '../../interfaces/Card.model'
 interface Props {
-  card: Card
+  card: ICard
+  fav: boolean
 }
 
-function Card({ card }: Props) {
+function Card({ card, fav }: Props) {
   const [hover, setHover] = useState(false)
-  const [favorite, setFavorite] = useState(false)
+  const [favorite, setFavorite] = useState(fav)
   const handleHover = () => {
     if (favorite) {
       return heartFavorite

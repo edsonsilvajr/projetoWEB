@@ -3,10 +3,16 @@ import './styles.scss'
 import logo from '../../assets/logo-icon.svg'
 import userIcon from '../../assets/user-icon.svg'
 import searchIcon from '../../assets/search-icon.svg'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
+interface IUser {
+  uid: number
+  name: string
+  type: string
+}
 interface Props {
-  condition: boolean
+  user: IUser
 }
 
 interface RefObject<T> {
@@ -15,7 +21,9 @@ interface RefObject<T> {
 }
 
 const Navbar = () => {
-  const [condition, setCondition] = useState(false)
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state)
+
   const [modalOpen, setModalOpen] = useState(false)
 
   const useOutsideClickEvent = (ref: RefObject<any>) => {
@@ -41,13 +49,14 @@ const Navbar = () => {
       <div ref={wrapperRef} className="user-settings">
         <p>Favoritos</p>
         <p>Gerenciar Receitas</p>
-        <p>Exibir Perfil</p>
+        <Link to="/profile">Exibir Perfil</Link>
         <Link
           to="/"
           className="log-out"
           onClick={() => {
             setModalOpen(false)
-            setCondition(!condition)
+            localStorage.removeItem('jw_token')
+            dispatch({ type: 'DELETE_USER' })
           }}
         >
           Logout
@@ -56,8 +65,8 @@ const Navbar = () => {
     )
   }
 
-  const UserControl = ({ condition }: Props) => {
-    if (!condition) {
+  const UserControl = ({ user }: Props) => {
+    if (!user) {
       return (
         <div className="auth-wrapper">
           <Link to="/login" className="log-in">
@@ -82,8 +91,8 @@ const Navbar = () => {
           >
             <img src={userIcon} alt="user-icon" />
             <div className="user-info">
-              <p>User</p>
-              <p>User Type</p>
+              <p>{user.name}</p>
+              <p>{user.type}</p>
             </div>
           </div>
           {modalOpen && <UserSettings />}
@@ -108,7 +117,7 @@ const Navbar = () => {
           <img src={searchIcon} alt="Icone de pesquisa" />
         </button>
       </div>
-      <UserControl condition={condition} />
+      <UserControl user={user as IUser} />
     </div>
   )
 }
