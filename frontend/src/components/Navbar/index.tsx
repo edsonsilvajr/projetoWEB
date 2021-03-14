@@ -49,7 +49,7 @@ const Navbar = () => {
       <div ref={wrapperRef} className="user-settings">
         <p>Favoritos</p>
         <p>Gerenciar Receitas</p>
-        <p>Exibir Perfil</p>
+        <Link to="/profile">Exibir Perfil</Link>
         <Link
           to="/"
           className="log-out"
