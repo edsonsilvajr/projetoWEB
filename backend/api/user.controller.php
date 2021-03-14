@@ -20,6 +20,9 @@ if (str_contains($metodo, 'POST')) {
     $usuario['uid'] = $id;
     if (!in_array($usuario['email'], array_column($usuarios, 'email'))) {
         $usuario['favorites'] = [];
+        if (strtolower($usuario['type']) == 'aprendiz') {
+            $usuario['document'] = null;
+        }
         array_push($usuarios, $usuario);
         file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
         echo json_encode($usuarios);
