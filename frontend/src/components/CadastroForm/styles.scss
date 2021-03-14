@@ -11,7 +11,8 @@
   align-items: center;
   height: auto;
   width: 800px;
-  background-color: white;
+  background-color: #b82121;
+  color: white;
   padding: 24px 48px;
   input[type='text'],
   input[type='password'] {
@@ -26,7 +27,7 @@
 
 .containerCadastro h1 {
   text-align: center;
-  color: #b82121;
+  color: white;
 }
 
 .typeContainer {
@@ -37,11 +38,15 @@
   justify-content: center;
   align-items: center;
   select {
-    border: 1px solid #b82121;
     border-radius: 5px;
     width: 20%;
     padding: 5px 20px;
     margin: 2px 5px;
+    border: none;
+    outline: none;
+  }
+  select:focus{
+    outline: none !important;
   }
 }
 
@@ -52,23 +57,39 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  button {
+  position: relative;
+  button, a {
     border-radius: 50px;
     font-size: 18px;
     outline: none;
     border: none;
     padding: 5px 15px;
     background-color: #b82121;
+    border: 1px solid white;
     color: white;
+    cursor: pointer;
+    transition: 0.2s;
   }
+  button:hover, a:hover{
+      background-color: white;
+      color: #b82121;
+      cursor: pointer;
+  }
+}
+
+.error {
+  left: 20px;
+  position: absolute;
+  top: 45px;
+  font-size: 12px;
 }
 
 .fieldContainer:last-child {
   margin-top: 20px;
   width: 97%;
-  border-top: 1px solid #b82121;
+  border-top: 1px solid white;
   justify-content: center;
-  button {
+  button, a {
     margin: 20px 40px 0;
   }
 }
@@ -80,16 +101,23 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  
 }
 
 .leftSide {
   width: 50%;
+  position: relative;
   input[type='date'] {
     outline: none;
     border: 1px solid #b82121;
     border-radius: 5px;
     padding: 5px 10px;
     margin-left: 10px;
+  }
+  .error {
+    left: 10px;
+    position: absolute;
+    top:32px;
   }
 }
 
@@ -99,10 +127,16 @@
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
+  position: relative;
   input[type='radio'] {
     border-radius: 5px;
     padding: 5px 10px;
     margin-left: 10px;
     margin-right: 5px;
+  }
+  .error {
+    left: 130px;
+    position: absolute;
+    top:22px;
   }
 }

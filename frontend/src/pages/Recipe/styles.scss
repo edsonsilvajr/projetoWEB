@@ -4,17 +4,18 @@
   flex-direction: column;
   margin: 24px 0;
   border-radius: 15px;
-  overflow: hidden;
 }
 
 .recipe-info {
   background: #fdf9f9;
+  border-radius: 0 0 15px 15px;
   padding: 24px;
 }
 
 .recipe-img {
   width: 100%;
   height: auto;
+  border-radius: 15px 15px 0 0;
 }
 
 .recipe-title {

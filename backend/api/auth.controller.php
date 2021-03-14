@@ -38,6 +38,7 @@ if (str_contains($metodo, 'POST')) {
                 "errors" => "Incorrect Password"
             ];
             http_response_code(401);
+            header('Content-Type: application/json');
             echo json_encode($message);
         }
     } else {
@@ -47,6 +48,7 @@ if (str_contains($metodo, 'POST')) {
             "errors" => "User not found"
         ];
         http_response_code(404);
+        header('Content-Type: application/json');
         echo json_encode($message);
     }
 }
