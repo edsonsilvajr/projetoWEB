@@ -1,15 +1,18 @@
 import axios from 'axios'
 import { Formik } from 'formik'
 import React, { FormEvent, useState } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Background from '../../components/Background'
 import api from '../../services/api'
 import './styles.scss'
 import * as yup from 'yup'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 //TODO: atribuir dados para os inputs
 
 function Login() {
+  const history = useHistory()
   const userSchema = yup.object().shape({
     email: yup.string().email().required(),
     password: yup.string().required(),
@@ -26,9 +29,18 @@ function Login() {
               const data = res.data.data
               localStorage.setItem('jw_token', data.token)
               setSubmitting(false)
+              history.push('/')
             },
             (err) => {
-              alert(err.response.data.errors)
+              toast.error('👨‍🍳 ' + err.response.data.errors, {
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              })
             }
           )
         }}
@@ -43,6 +55,7 @@ function Login() {
           isSubmitting,
         }) => (
           <form onSubmit={handleSubmit} className="login-container">
+            <ToastContainer />
             <h1 className="login-title">Login</h1>
             <div className="login-field">
               <label>Email</label>

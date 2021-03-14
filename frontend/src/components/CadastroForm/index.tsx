@@ -5,6 +5,7 @@ import './styles.scss'
 import * as yup from 'yup'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
 
 function CadastroForm() {
   const history = useHistory()
@@ -44,8 +45,15 @@ function CadastroForm() {
             history.push('/')
           },
           (err) => {
-            alert(err.response.data.errors)
-            setStatus(err.response.data.errors)
+            toast.error('👨‍🍳 ' + err.response.data.errors, {
+              position: 'top-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            })
           }
         )
       }}
@@ -64,6 +72,7 @@ function CadastroForm() {
           className="containerCadastro"
           onSubmit={handleSubmit}
         >
+          <ToastContainer />
           <h1>Cadastro</h1>
           <div className="typeContainer">
             <label>Selecione um tipo de cadastro: </label>
@@ -113,7 +122,7 @@ function CadastroForm() {
           <div className="fieldContainer">
             <label>E-mail:</label>
             <input
-              type="text"
+              type="email"
               name="email"
               className="email"
               value={values.email}

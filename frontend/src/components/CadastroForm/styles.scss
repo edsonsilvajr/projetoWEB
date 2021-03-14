@@ -15,9 +15,10 @@
   color: white;
   padding: 24px 48px;
   input[type='text'],
-  input[type='password'] {
+  input[type='password'],
+  input[type='email'] {
     outline: none;
-    border: 1px solid #b82121;
+    border: none;
     border-radius: 5px;
     width: 90%;
     padding: 5px 20px;
