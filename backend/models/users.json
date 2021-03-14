@@ -1,6 +1,6 @@
 [
     {
-        "uid": "15902",
+        "uid": 15902,
         "email": "edsonsilvajr21@gmail.com",
         "password": "123",
         "type": "Aprendiz",
@@ -10,7 +10,7 @@
         ],
         "name": "Edsao Silva",
         "gender": "M",
-        "date": "10/01/1990",
+        "date": "10\/01\/1990",
         "document": null
     },
     {
@@ -18,10 +18,13 @@
         "email": "testenoovo@gmail.com",
         "password": "456",
         "type": "Aprendiz",
-        "favorites": [],
+        "favorites": [
+            "0",
+            "12"
+        ],
         "name": "testenovo",
         "gender": "M",
-        "date": "10/01/1990",
+        "date": "10\/01\/1990",
         "document": null
     },
     {
@@ -35,11 +38,11 @@
         ],
         "name": "VINI JHONSON",
         "gender": "M",
-        "date": "30/02/1999",
+        "date": "30\/02\/1999",
         "document": "Chef Autorizado"
     },
     {
-        "uid": "815235",
+        "uid": 815235,
         "email": "davidp@gmail.com",
         "password": "kabal",
         "type": "Aprendiz",
@@ -49,13 +52,17 @@
         ],
         "name": "KABALZERA",
         "gender": "M",
-        "date": "12/12/2001",
+        "date": "12\/12\/2001",
         "document": null
     },
     {
         "uid": 228072,
         "name": "Edson",
         "type": "Aprendiz",
+        "favorites": [
+            "0",
+            "12"
+        ],
         "password": "123123123",
         "gender": "M",
         "date": "1997-05-01",
@@ -66,6 +73,10 @@
         "uid": 580573,
         "name": "asdsad",
         "type": "Aprendiz",
+        "favorites": [
+            "0",
+            "11"
+        ],
         "password": "123123123",
         "gender": "M",
         "date": "2021-03-02",
@@ -76,6 +87,10 @@
         "uid": 365755,
         "name": "asdsad",
         "type": "aprendiz",
+        "favorites": [
+            "13",
+            "12"
+        ],
         "password": "123",
         "gender": "M",
         "date": "2021-03-04",
@@ -86,6 +101,9 @@
         "uid": 434478,
         "name": "asdsad",
         "type": "aprendiz",
+        "favorites": [
+            "743654"
+        ],
         "password": "oaksdokasdoksad",
         "gender": "M",
         "date": "2021-03-01",
@@ -96,6 +114,10 @@
         "uid": 665428,
         "name": "aaaaaaa",
         "type": "aprendiz",
+        "favorites": [
+            "210203",
+            "13"
+        ],
         "password": "123",
         "gender": "M",
         "date": "2021-03-01",
@@ -106,6 +128,10 @@
         "uid": 276419,
         "name": "asdsad",
         "type": "cozinheiro",
+        "favorites": [
+            "743654",
+            "210203"
+        ],
         "password": "111",
         "gender": "M",
         "date": "2021-03-04",
@@ -116,6 +142,10 @@
         "uid": 981179,
         "name": "asdsad",
         "type": "aprendiz",
+        "favorites": [
+            "210203",
+            "12"
+        ],
         "password": "123",
         "gender": "M",
         "date": "2021-03-01",
@@ -123,13 +153,17 @@
         "document": ""
     },
     {
-        "uid": 195074,
-        "name": "aaaaaaa",
+        "uid": 12365,
+        "name": "Zezinho",
         "type": "cozinheiro",
+        "favorites": [
+            "10",
+            "11"
+        ],
         "password": "dasdsdasd",
         "gender": "M",
         "date": "2021-03-03",
-        "email": "aaaa@aaa.com",
+        "email": "zezinho@aaa.com",
         "document": "12312313"
     }
 ]

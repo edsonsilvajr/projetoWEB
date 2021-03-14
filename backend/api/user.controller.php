@@ -1,23 +1,25 @@
 <?php
+function getRandomId($usuarios)
+{
+    $random_id = random_int(0, 1000000);
+    while (array_search($random_id, array_column($usuarios, 'uid'))) {
+        $random_id = random_int(0, 1000000);
+    }
+    return $random_id;
+}
 
 $file_path = getcwd() . "/models/users.json";
 
 $usuarios = json_decode(file_get_contents($file_path), true);
 $id = getRandomId($usuarios);
 
-function getRandomId($usuarios)
-{
-    $random_id = random_int(0, 1000000);
-    while (array_search($random_id, array_column($usuarios, 'id'))) {
-        $random_id = random_int(0, 1000000);
-    }
-    return $random_id;
-}
+
 
 if (str_contains($metodo, 'POST')) {
     $usuario = json_decode(file_get_contents('php://input'), true);
     $usuario['uid'] = $id;
     if (!in_array($usuario['email'], array_column($usuarios, 'email'))) {
+        $usuario['favorites'] = [];
         array_push($usuarios, $usuario);
         file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
         echo json_encode($usuarios);
