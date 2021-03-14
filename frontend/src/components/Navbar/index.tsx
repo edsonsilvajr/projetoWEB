@@ -47,9 +47,9 @@ const Navbar = () => {
 
     return (
       <div ref={wrapperRef} className="user-settings">
-        <p>Favoritos</p>
-        <p>Gerenciar Receitas</p>
-        <Link to="/profile">Exibir Perfil</Link>
+        <Link to="/profile" onClick={() => setModalOpen(false)}>
+          Exibir Perfil
+        </Link>
         <Link
           to="/"
           className="log-out"
