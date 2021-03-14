@@ -5,6 +5,19 @@
   margin-top: 50px;
 }
 
+.react-tabs__tab--selected {
+  background-color: #b82121 !important;
+  border: 2px solid white !important;
+  border-bottom: 2px solid #b82121 !important;
+  img {
+    filter: invert(1);
+  }
+}
+
+.react-tabs__tab-list {
+  border-bottom: 1px solid white !important;
+}
+
 .bgReceitas{
   h2{
     text-align: center;

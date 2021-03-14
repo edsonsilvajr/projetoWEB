@@ -8,8 +8,6 @@ const INITIAL_STATE: IUser | null = token
   ? (jwt_decode(token as string) as IUser)
   : null
 
-console.log(INITIAL_STATE)
-
 //useselector e dispatch
 
 function user(state = INITIAL_STATE, action: AnyAction) {
