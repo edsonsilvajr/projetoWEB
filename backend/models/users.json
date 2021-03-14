@@ -4,13 +4,10 @@
     "email": "edsonsilvajr21@gmail.com",
     "password": "123",
     "type": "Aprendiz",
-    "favorites": [
-      "0",
-      "12"
-    ],
-    "nome": "Edsao Silva",
+    "favorites": ["0", "12"],
+    "name": "Edsao Silva",
     "gender": "M",
-    "date": "10\/01\/1990",
+    "date": "10/01/1990",
     "document": null
   },
   {
@@ -19,9 +16,9 @@
     "password": "456",
     "type": "Aprendiz",
     "favorites": [],
-    "nome": "testenovo",
+    "name": "testenovo",
     "gender": "M",
-    "date": "10\/01\/1990",
+    "date": "10/01/1990",
     "document": null
   },
   {
@@ -29,13 +26,10 @@
     "email": "lopesvinicius954@gmail.com",
     "password": "1234444",
     "type": "Chef",
-    "favorites": [
-      "11",
-      "10"
-    ],
-    "nome": "VINI JHONSON",
+    "favorites": ["11", "10"],
+    "name": "VINI JHONSON",
     "gender": "M",
-    "date": "30\/02\/1999",
+    "date": "30/02/1999",
     "document": "Chef Autorizado"
   },
   {
@@ -43,13 +37,20 @@
     "email": "davidp@gmail.com",
     "password": "kabal",
     "type": "Aprendiz",
-    "favorites": [
-      "13",
-      "0"
-    ],
-    "nome": "KABALZERA",
+    "favorites": ["13", "0"],
+    "name": "KABALZERA",
     "gender": "M",
-    "date": "12\/12\/2001",
+    "date": "12/12/2001",
+    "document": null
+  },
+  {
+    "uid": 228072,
+    "name": "Edson",
+    "type": "batata",
+    "password": "123123123",
+    "gender": "M",
+    "date": "1997-05-01",
+    "email": "edsonsilvajr21@gmail.com",
     "document": null
   }
 ]

@@ -57,18 +57,30 @@ if (str_contains($metodo, 'GET')) {
 
 function isAuthenticated($receivedToken)
 {
+
+    //TODO: CRIAR EXPIRAÇÃO
+
     $token = explode('Bearer ', $receivedToken);
     $token = explode('.', $token[1]);
 
     $header = $token[0];
     $payload = $token[1];
-    $received_signature = $token[2];
+
+    //PARA EVITAR O \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    $received_signature = json_encode($token[2]);
+    $received_signature = explode('"', $received_signature)[1];
+
 
     $valid_signature = hash_hmac('sha256', "$header.$payload", '123', true);
     $valid_signature = base64_encode($valid_signature);
 
+    //PARA EVITAR O \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     $valid_signature = json_encode($valid_signature);
     $valid_signature = explode('"', $valid_signature)[1];
 
-    return $received_signature === $valid_signature;
+    if ($received_signature === $valid_signature) {
+        echo json_encode(["status" => "autenticado"]);
+    } else {
+        echo json_encode(["status" => "não autenticado"]);
+    }
 }

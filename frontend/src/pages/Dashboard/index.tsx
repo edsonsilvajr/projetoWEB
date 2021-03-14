@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Background from '../../components/Background'
 import Card from '../../components/Card'
 import './styles.scss'
-
-//importing MOCK
-import { arrayCards } from './data'
-import axios from 'axios'
+import api from '../../services/api'
 
 interface ICard {
   id: number
@@ -18,11 +15,9 @@ const Dashboard = () => {
   const [cards, setCards] = useState<ICard[]>([])
 
   useEffect(() => {
-    axios
-      .get('http://localhost/api/recipe', { params: { getParam: 2 } })
-      .then((response) => {
-        setCards(response.data)
-      })
+    api.get('recipe', { params: { getParam: 2 } }).then((response) => {
+      setCards(response.data)
+    })
   }, [])
 
   return (

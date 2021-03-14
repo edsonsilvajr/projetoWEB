@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useRouteMatch } from 'react-router'
 import Background from '../../components/Background'
 import './styles.scss'
-
-//importando MOCK
-import { arrayCards } from './data'
-import axios from 'axios'
+import api from '../../services/api'
 
 interface Params {
   recipe_id: string
@@ -26,12 +23,11 @@ function Recipe() {
   const [toShow, setToShow] = useState<Recipe>()
 
   useEffect(() => {
-    axios
-      .get(`http://localhost/api/recipe`, {
+    api
+      .get(`recipe`, {
         params: { getParam: 1, id: params.recipe_id },
       })
       .then((response) => {
-        console.log(response.data)
         setToShow(response.data)
       })
   }, [])
