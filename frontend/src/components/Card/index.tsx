@@ -6,14 +6,21 @@ import heartHover from '../../assets/heart-hover.svg'
 import heartFavorite from '../../assets/heart-favorito.svg'
 import { Link } from 'react-router-dom'
 import { ICard } from '../../interfaces/Card.model'
+import { IUser } from '../../interfaces/User.model'
+import { useDispatch, useSelector } from 'react-redux'
+import api from '../../services/api'
 interface Props {
   card: ICard
   fav: boolean
 }
 
 function Card({ card, fav }: Props) {
+  const user = useSelector((state) => state) as IUser
+  const dispatch = useDispatch()
+
   const [hover, setHover] = useState(false)
   const [favorite, setFavorite] = useState(fav)
+
   const handleHover = () => {
     if (favorite) {
       return heartFavorite
@@ -25,8 +32,23 @@ function Card({ card, fav }: Props) {
     return heartIcon
   }
 
+  const setFavorites = () => {
+    if (user.favorites.includes(card.id)) {
+      user.favorites.splice(user.favorites.indexOf(card.id), 1)
+    } else {
+      user.favorites.push(card.id)
+    }
+    dispatch({ type: 'SET_USER', payload: user })
+    api
+      .put('user', user, {
+        params: { uid: user.uid, getParam: '2' },
+      })
+      .then((res) => {
+        setFavorite(!favorite)
+      })
+  }
+
   //define se o coração vai existir ou não, pegar futuramente do context API/ Redux
-  const user = true
 
   return (
     <div className="card">
@@ -45,7 +67,7 @@ function Card({ card, fav }: Props) {
             src={handleHover()}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            onClick={() => setFavorite(!favorite)}
+            onClick={setFavorites}
             className="heartIcon"
             alt="Icone de favorito"
           />
