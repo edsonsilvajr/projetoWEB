@@ -17,9 +17,14 @@ function getRandomId($usuarios)
 if (str_contains($metodo, 'POST')) {
     $usuario = json_decode(file_get_contents('php://input'), true);
     $usuario['uid'] = $id;
-    array_push($usuarios, $usuario);
-    file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
-    echo json_encode($usuarios);
+    if (!in_array($usuario['email'], array_column($usuarios, 'email'))) {
+        array_push($usuarios, $usuario);
+        file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
+        echo json_encode($usuarios);
+    } else { // Email
+        http_response_code(404);
+        echo "Email already linked to an account";
+    }
 } else if (str_contains($metodo, 'GET')) {
     $indice = array_search($_GET['uid'] ?? null, array_column($usuarios, 'uid'));
 
