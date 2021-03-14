@@ -1,10 +1,55 @@
 [
   {
+    "uid": "15902",
     "email": "edsonsilvajr21@gmail.com",
-    "password": "123"
+    "password": "123",
+    "type": "Aprendiz",
+    "favorites": [
+      "0",
+      "12"
+    ],
+    "nome": "Edsao Silva",
+    "gender": "M",
+    "date": "10\/01\/1990",
+    "document": null
   },
   {
-    "email": "zezinho019239788das9di10dk02301293@gmail.com",
-    "password": "OAsdoksaodkosadisajdc,zxcpqlwpewqeok"
+    "uid": 12365,
+    "email": "testenoovo@gmail.com",
+    "password": "456",
+    "type": "Aprendiz",
+    "favorites": [],
+    "nome": "testenovo",
+    "gender": "M",
+    "date": "10\/01\/1990",
+    "document": null
+  },
+  {
+    "uid": 985624,
+    "email": "lopesvinicius954@gmail.com",
+    "password": "1234444",
+    "type": "Chef",
+    "favorites": [
+      "11",
+      "10"
+    ],
+    "nome": "VINI JHONSON",
+    "gender": "M",
+    "date": "30\/02\/1999",
+    "document": "Chef Autorizado"
+  },
+  {
+    "uid": "815235",
+    "email": "davidp@gmail.com",
+    "password": "kabal",
+    "type": "Aprendiz",
+    "favorites": [
+      "13",
+      "0"
+    ],
+    "nome": "KABALZERA",
+    "gender": "M",
+    "date": "12\/12\/2001",
+    "document": null
   }
 ]

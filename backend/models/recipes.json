@@ -2,6 +2,7 @@
   {
     "id": 10,
     "author": "Chef Zezinho",
+    "authorid": "012365",
     "title": "FRITURA",
     "url": "https://img.elo7.com.br/product/zoom/22565B3/adesivo-parede-prato-comida-frango-salada-restaurante-lindo-adesivo-parede.jpg",
     "description": "Um delecioso prato de frango com batata frita e salada",
@@ -11,7 +12,8 @@
   },
   {
     "id": 11,
-    "author": "Chef Zezinho",
+    "author": "Chef Joker",
+    "authorid": "985624",
     "title": "RAMEN",
     "url": "https://i1.wp.com/www.verdadefeminina.com.br/wp-content/uploads/2019/04/ramen-comida-japonesa-e1555817633288.jpg",
     "description": "RAMEN JAPONES",
@@ -21,7 +23,8 @@
   },
   {
     "id": 12,
-    "author": "Chef Zezinho",
+    "author": "Chef Joker",
+    "authorid": "985624",
     "title": "HASH POTATOES + FRANGO",
     "url": "https://i1.wp.com/verdadefeminina.com.br/wp-content/uploads/2019/04/comida-japonesa-o-que-comer-japao.jpg",
     "description": "Batatas e frango",
@@ -32,6 +35,7 @@
   {
     "id": 13,
     "author": "Chef Zezinho",
+    "authorid": "012365",
     "title": "Comida Mexiaca - Fajitas",
     "url": "https://cptstatic.s3.amazonaws.com/imagens/enviadas/materias/materia10793/comida-mexicana-receita-de-fajitas-cpt.jpg",
     "description": "Fajitas s\u00e3o um delicioso prato da culin\u00e1ria Tex-Mex, que nada mais s\u00e3o do que carne grelhada servida com tortillas de milho ou de farinha. Seus acompanhamentos mais populares s\u00e3o a alface picada, o creme azedo, a guacamole, a salsa, o pico-de-gallo, o queijo, e o tomate.",
@@ -43,6 +47,7 @@
     "id": 0,
     "author": "Chef Zezinho",
     "title": "Bolinho do ze",
+    "authorid": "012365",
     "url": "https://img.itdg.com.br/tdg/images/blog/uploads/2019/07/bolos-de-vo-cenoura.jpg",
     "description": "Um delecioso prato de frango com batata frita e salada",
     "ingredients": "2x peda\u00e7os de frango, 1 pacote de batata frita, salada a gosto",
@@ -51,17 +56,19 @@
   },
   {
     "id": 210203,
-    "author": "Chef Zezinho 2000",
+    "author": "Chef Joker",
+    "authorid": "985624",
     "title": "TORTINHAA",
     "url": "https://p2.trrsf.com/image/fget/cf/460/0/images.terra.com/2020/09/18/torta-gelada-cafe-chocolate-768x512.jpg",
     "description": "Um delecioso prato de frango com batata frita e salada",
     "ingredients": "2x peda\u00e7os de frango, 1 pacote de batata frita, salada a gosto",
-    "preparationMode": "frita tudo e come",
+    "preparationMode": "DOCEEEEEEEEEEEEEEEE",
     "category": "Sobremesas"
   },
   {
     "id": 743654,
     "author": "Chef Zezinho 20",
+    "authorid": "012365",
     "title": "DRINKZIN DO ZEZIN",
     "url": "https://img.itdg.com.br/tdg/images/blog/uploads/2019/05/bebidas-para-festa-junina.jpg?w=1200",
     "description": "Um delecioso prato de frango com batata frita e salada",
