@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Recipe from './pages/Recipe'
+import RecipeAdd from './pages/RecipeAdd'
 
 const Routes = () => {
   return (
@@ -17,6 +18,7 @@ const Routes = () => {
       <Route component={Cadastro} path="/sign-in" />
       <Route component={Profile} path="/profile" />
       <Route component={CadastroEdit} path="/user/edit" />
+      <Route component={RecipeAdd} path="/user/recipe-add" />
     </BrowserRouter>
   )
 }

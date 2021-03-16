@@ -46,7 +46,7 @@
     border: none;
     outline: none;
   }
-  select:focus{
+  select:focus {
     outline: none !important;
   }
 }
@@ -59,7 +59,8 @@
   align-items: center;
   padding: 10px;
   position: relative;
-  button, a {
+  button,
+  a {
     border-radius: 50px;
     font-size: 18px;
     outline: none;
@@ -71,10 +72,11 @@
     cursor: pointer;
     transition: 0.2s;
   }
-  button:hover, a:hover{
-      background-color: white;
-      color: #b82121;
-      cursor: pointer;
+  button:hover,
+  a:hover {
+    background-color: white;
+    color: #b82121;
+    cursor: pointer;
   }
 }
 
@@ -90,7 +92,8 @@
   width: 97%;
   border-top: 1px solid white;
   justify-content: center;
-  button, a {
+  button,
+  a {
     margin: 20px 40px 0;
   }
 }
@@ -102,7 +105,6 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  
 }
 
 .leftSide {
@@ -118,7 +120,7 @@
   .error {
     left: 10px;
     position: absolute;
-    top:32px;
+    top: 32px;
   }
 }
 
@@ -138,6 +140,6 @@
   .error {
     left: 130px;
     position: absolute;
-    top:22px;
+    top: 22px;
   }
 }

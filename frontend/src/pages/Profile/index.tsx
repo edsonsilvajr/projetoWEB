@@ -12,6 +12,7 @@ import { ICard } from '../../interfaces/Card.model'
 import api from '../../services/api'
 import Card from '../../components/Card'
 import { Link } from 'react-router-dom'
+import addIcon from '../../assets/add-icon.svg'
 
 function Profile() {
   const user = useSelector((state) => state) as IUser
@@ -55,11 +56,11 @@ function Profile() {
                   <label className="dado">{user.name}</label>
                 </div>
                 <div className="middleContainerProfile">
-                  <div className="leftSideProfile">
+                  <div>
                     <label>D.Nascimento:</label>
                     <label className="dado">{user.date}</label>
                   </div>
-                  <div className="rightSideProfile">
+                  <div>
                     <label>Sexo:</label>
                     <label className="dado">
                       {user.gender === 'M' ? 'Masculino' : 'Feminino'}
@@ -85,6 +86,13 @@ function Profile() {
                     {cards.map((element) => (
                       <Card key={element.id} card={element} fav={false} />
                     ))}
+
+                    <button className="newRecipe">
+                      <Link to="/user/recipe-add">
+                        <img src={addIcon} className="iconAdd" alt="icone para adicionar"/>
+                        <p>Adicionar receita</p>
+                      </Link>
+                    </button>
                   </div>
                 </div>
               </TabPanel>

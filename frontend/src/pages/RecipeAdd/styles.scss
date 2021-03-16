@@ -1,0 +1,81 @@
+.recipeAdd {
+  h2 {
+    margin-top: 2%;
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 50px;
+  }
+  margin-top: 60px;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  width: 50%;
+  background-color: #b82121;
+
+  button,
+  a {
+    border-radius: 50px;
+    font-size: 18px;
+    outline: none;
+    border: none;
+    padding: 5px 25px;
+    background-color: #b82121;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  button:hover,
+  a:hover {
+    background-color: white;
+    color: #b82121;
+    cursor: pointer;
+  }
+}
+
+.fields {
+  padding: 10px;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  label {
+    font-size: 17px;
+  }
+
+  [type='text'] {
+    margin-left: 2%;
+    width: 80%;
+    outline: none;
+    border: none;
+    height: 36px;
+    padding: 12px;
+    border-radius: 5px;
+  }
+
+  textarea {
+    width: 80%;
+    height: 130px;
+    outline: none;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+  }
+}
+
+.recipeAddFooter {
+  margin-top: 30px;
+  padding: 30px 150px;
+  width: 70%;
+  border-top: 1px solid white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

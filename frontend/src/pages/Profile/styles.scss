@@ -18,8 +18,8 @@
   border-bottom: 1px solid white !important;
 }
 
-.bgReceitas{
-  h2{
+.bgReceitas {
+  h2 {
     text-align: center;
     font-size: 50px;
     color: white;
@@ -48,14 +48,14 @@
 }
 
 .profileUser {
-  font-size: 30px;
+  font-size: 25px;
   padding: 30px 120px;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  h2{
+  h2 {
     text-align: center;
     font-size: 50px;
     color: white;
@@ -113,7 +113,7 @@
 }
 
 .dado {
-  font-weight: 50;
+  font-weight: 40;
   margin-left: 2%;
   color: white;
 }
@@ -124,4 +124,28 @@
   grid-column-gap: 24px;
   grid-row-gap: 24px;
   justify-items: center;
+}
+
+.newRecipe {
+  outline: none;
+  border: none;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  width: 275px;
+  background-color: #eec8c8;
+  p {
+    color: black;
+  }
+}
+
+.iconAdd {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 4%;
 }
