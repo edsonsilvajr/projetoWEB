@@ -54,7 +54,14 @@ if (str_contains($metodo, 'POST')) {
     switch ($_GET['getParam']) {
         case '1': // updating entire user
             if ($indice || $indice === 0) {
+                $passwordBackup = $usuarios[$indice]['password'];
+                $favoritesBackup = $usuarios[$indice]['favorites'];
                 $usuarios[$indice] = $usuario;
+
+                // recebendo os campos que podem ser perdidos
+                $usuarios[$indice]['password'] = $passwordBackup;
+                $usuarios[$indice]['favorites'] = $favoritesBackup;
+
                 $usuarios[$indice]['uid'] = (int)$_GET['uid'];
                 file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
                 echo json_encode($usuarios);

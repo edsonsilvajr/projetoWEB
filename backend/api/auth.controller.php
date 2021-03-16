@@ -31,8 +31,10 @@ if (str_contains($metodo, 'POST')) {
 
             $key = $header . '.' . $payload . '.' . $signature;
 
+            $userToSend = $users[$user_index];
+            unset($userToSend['password']);
             $message = [
-                "data" => ["token" => $key],
+                "data" => ["token" => $key, "user" => $userToSend],
                 "status" => "success"
             ];
             echo json_encode($message);
