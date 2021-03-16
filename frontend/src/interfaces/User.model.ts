@@ -3,4 +3,8 @@ export interface IUser {
   name: string
   favorites: number[]
   type: string
+  gender: string
+  date: string
+  email: string
+  document: string
 }
