@@ -2,19 +2,23 @@ import { AnyAction, createStore } from 'redux'
 import jwt_decode from 'jwt-decode'
 import { IUser } from '../interfaces/User.model'
 
-const token = localStorage.getItem('jw_token')
+const getUser = localStorage.getItem('user')
 
-const INITIAL_STATE: IUser | null = token
-  ? (jwt_decode(token as string) as IUser)
-  : null
+const INITIAL_STATE: IUser | null = getUser ? JSON.parse(getUser) : null
 
 //useselector e dispatch
 
 function user(state = INITIAL_STATE, action: AnyAction) {
   switch (action.type) {
     case 'SET_USER':
-      return { ...state, ...action.payload }
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ ...state, ...action.payload })
+      )
+      return { ...state, ...action.payload } as IUser
     case 'DELETE_USER':
+      localStorage.removeItem('user')
+      localStorage.removeItem('jw_token')
       state = null
       return state
     default:
