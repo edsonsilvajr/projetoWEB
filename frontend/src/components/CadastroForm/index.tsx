@@ -6,14 +6,18 @@ import * as yup from 'yup'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
+import { IUser } from '../../interfaces/User.model'
 
-function CadastroForm() {
+interface Props {
+  user?: IUser
+}
+function CadastroForm({ user }: Props) {
   const history = useHistory()
 
   const userSchema = yup.object().shape({
     name: yup.string().required('* Nome é obrigatório!'),
     type: yup.string().required(),
-    password: yup.string().required('* Senha é obrigatória!'),
+    password: yup.string().required('* A senha é obrigatória!'),
     gender: yup.string().required('* Gênero é obrigatório!'),
     date: yup.string().required('* A data de nascimento é obrigatória!'),
     email: yup.string().email().required('* O email é obrigatório!'),
@@ -25,37 +29,53 @@ function CadastroForm() {
     }),
   })
 
+  console.log(userSchema)
+
   return (
     <Formik
       initialValues={{
-        uid: null,
-        name: '',
-        type: 'aprendiz',
+        uid: user?.uid || null,
+        name: user?.name || '',
+        type: user?.type || 'aprendiz',
         password: '',
-        gender: '',
-        date: '',
-        email: '',
-        document: '',
+        gender: user?.gender || '',
+        date: user?.date || '',
+        email: user?.email || '',
+        document: user?.document || '',
       }}
       validationSchema={userSchema}
       onSubmit={(values, { setSubmitting, setStatus }) => {
-        api.post('user', values).then(
-          (res) => {
-            console.log(res)
-            history.push('/')
-          },
-          (err) => {
-            toast.error('👨‍🍳 ' + err.response.data.errors, {
-              position: 'top-center',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
+        if (!user) {
+          api.post('user', values).then(
+            (res) => {
+              console.log(res)
+              history.push('/')
+            },
+            (err) => {
+              toast.error('👨‍🍳 ' + err.response.data.errors, {
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              })
+            }
+          )
+        } else {
+          console.log('caindo aqui')
+          api
+            .put('user', values, {
+              params: {
+                getParam: 1,
+                uid: user.uid,
+              },
             })
-          }
-        )
+            .then((res) => {
+              console.log(res)
+            })
+        }
       }}
     >
       {({
@@ -73,7 +93,7 @@ function CadastroForm() {
           onSubmit={handleSubmit}
         >
           <ToastContainer />
-          <h1>Cadastro</h1>
+          <h1>{user && 'Editar '}Cadastro</h1>
           <div className="typeContainer">
             <label>Selecione um tipo de cadastro: </label>
             <Field as="select" name="type" id="type" value={values.type}>
@@ -133,20 +153,22 @@ function CadastroForm() {
               {errors.email && touched.email && errors.email}
             </div>
           </div>
-          <div className="fieldContainer">
-            <label>Senha:</label>
-            <input
-              type="password"
-              name="password"
-              className="senha"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <div className="error">
-              {errors.password && touched.password && errors.password}
+          {!user && (
+            <div className="fieldContainer">
+              <label>Senha:</label>
+              <input
+                type="password"
+                name="password"
+                className="senha"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <div className="error">
+                {errors.password && touched.password && errors.password}
+              </div>
             </div>
-          </div>
+          )}
           {values.type === 'cozinheiro' && (
             <div className="fieldContainer">
               <label>Documento do Cozinheiro:</label>
