@@ -11,6 +11,7 @@ import { IUser } from '../../interfaces/User.model'
 import { ICard } from '../../interfaces/Card.model'
 import api from '../../services/api'
 import Card from '../../components/Card'
+import { Link } from 'react-router-dom'
 
 function Profile() {
   const user = useSelector((state) => state) as IUser
@@ -31,7 +32,7 @@ function Profile() {
           <h2>Olá {user.name}!</h2>
         </div>
         <div className="tab">
-          <Tabs defaultIndex={1}>
+          <Tabs defaultIndex={0}>
             <TabList>
               <Tab>
                 <img src={userProfileIcon} alt="Icone de usuario" />
@@ -56,21 +57,23 @@ function Profile() {
                 <div className="middleContainerProfile">
                   <div className="leftSideProfile">
                     <label>D.Nascimento:</label>
-                    <label className="dado">12/12/12</label>
+                    <label className="dado">{user.date}</label>
                   </div>
                   <div className="rightSideProfile">
                     <label>Sexo:</label>
-                    <label className="dado">Masculino</label>
+                    <label className="dado">
+                      {user.gender === 'M' ? 'Masculino' : 'Feminino'}
+                    </label>
                   </div>
                 </div>
                 <div className="divRow">
                   <label>E-mail:</label>
-                  <label className="dado">vine@vine.com</label>
+                  <label className="dado">{user.email}</label>
                 </div>
                 <div className="footerEdit">
-                  <button className="buttonEditCadastro">
+                  <Link to="/user/edit" className="buttonEditCadastro">
                     Editar Cadastro
-                  </button>
+                  </Link>
                 </div>
               </div>
             </TabPanel>

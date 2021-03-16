@@ -6,6 +6,7 @@ import api from '../../services/api'
 import { useSelector } from 'react-redux'
 import { IUser } from '../../interfaces/User.model'
 import { ICard } from '../../interfaces/Card.model'
+import { ToastContainer } from 'react-toastify'
 
 const Dashboard = () => {
   const user = useSelector((state) => state) as IUser
@@ -23,11 +24,14 @@ const Dashboard = () => {
 
   return (
     <Background>
-      <div className="card-row">
-        {cards.map((element) => (
-          <Card key={element.id} card={element} fav={check(element.id)} />
-        ))}
-      </div>
+      <>
+        <ToastContainer />
+        <div className="card-row">
+          {cards.map((element) => (
+            <Card key={element.id} card={element} fav={check(element.id)} />
+          ))}
+        </div>
+      </>
     </Background>
   )
 }

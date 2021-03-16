@@ -30,9 +30,21 @@ function Login() {
             (res) => {
               const data = res.data.data
               localStorage.setItem('jw_token', data.token)
+              localStorage.setItem('user', data.user)
               setSubmitting(false)
-              dispatch({ type: 'SET_USER', payload: jwt_decode(data.token) })
+              dispatch({ type: 'SET_USER', payload: data.user })
               history.push('/')
+              setTimeout(() => {
+                toast.success('👨‍🍳 ' + 'Logado com sucesso!', {
+                  position: 'top-center',
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                })
+              })
             },
             (err) => {
               toast.error('👨‍🍳 ' + err.response.data.errors, {
