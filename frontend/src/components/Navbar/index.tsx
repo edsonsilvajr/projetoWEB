@@ -55,7 +55,6 @@ const Navbar = () => {
           className="log-out"
           onClick={() => {
             setModalOpen(false)
-            localStorage.removeItem('jw_token')
             dispatch({ type: 'DELETE_USER' })
           }}
         >
