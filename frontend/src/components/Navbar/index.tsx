@@ -24,7 +24,7 @@ interface RefObject<T> {
 
 const Navbar = () => {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state)
+  const user = useSelector((state) => state) as IUser
 
   const [modalOpen, setModalOpen] = useState(false)
   const [inputValue, setInputValue] = useState<string>()
@@ -97,7 +97,7 @@ const Navbar = () => {
   }
 
   const UserControl = ({ user }: Props) => {
-    if (!user) {
+    if (!user.uid) {
       return (
         <div className="auth-wrapper">
           <Link to="/login" className="log-in">
@@ -150,7 +150,7 @@ const Navbar = () => {
           <img src={searchIcon} alt="Icone de pesquisa" />
         </button>
       </div>
-      <UserControl user={user as IUser} />
+      <UserControl user={user} />
     </div>
   )
 }
