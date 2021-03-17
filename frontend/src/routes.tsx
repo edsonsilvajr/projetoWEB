@@ -10,6 +10,7 @@ import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Recipe from './pages/Recipe'
 import RecipeAdd from './pages/RecipeAdd'
+import RecipeEdit from './pages/RecipeEdit'
 
 const Routes = () => {
   const user = useSelector((state) => state)
@@ -46,6 +47,7 @@ const Routes = () => {
       <PrivateRoute component={Profile} path="/profile" />
       <PrivateRoute component={CadastroEdit} path="/user/edit" />
       <PrivateRoute component={RecipeAdd} path="/user/recipe-add" />
+      <PrivateRoute component={RecipeEdit} path="/recipe-edit/:recipe_id+" />
     </BrowserRouter>
   )
 }

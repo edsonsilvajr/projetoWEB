@@ -101,6 +101,7 @@ function Profile() {
                         card={element}
                         fav={false}
                         isEditable
+                        isRemovable
                       />
                     ))}
 

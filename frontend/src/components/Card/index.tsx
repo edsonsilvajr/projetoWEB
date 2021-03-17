@@ -4,6 +4,8 @@ import receitaImg from '../../assets/receitaImg.png'
 import heartIcon from '../../assets/heart-icon.svg'
 import heartHover from '../../assets/heart-hover.svg'
 import heartFavorite from '../../assets/heart-favorito.svg'
+import editIcon from '../../assets/bi_pencil-square.svg'
+import deleteIcon from '../../assets/delete-icon.svg'
 import { Link } from 'react-router-dom'
 import { ICard } from '../../interfaces/Card.model'
 import { IUser } from '../../interfaces/User.model'
@@ -73,6 +75,19 @@ function Card({ card, fav, isEditable, isRemovable }: Props) {
             className="heartIcon"
             alt="Icone de favorito"
           />
+        )}
+        {user && isEditable && isRemovable && (
+          <div className="card-options">
+            <img src={editIcon} className="heartIcon" alt="Icone de edição" />
+            <img
+              src={deleteIcon}
+              className="heartIcon"
+              alt="Icone de Remoção"
+            />
+          </div>
+        )}
+        {user && !isEditable && isRemovable && (
+          <img src={deleteIcon} className="heartIcon" alt="Icone de Remoção" />
         )}
       </div>
     </div>
