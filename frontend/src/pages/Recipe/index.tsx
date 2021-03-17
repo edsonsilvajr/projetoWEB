@@ -3,24 +3,15 @@ import { useRouteMatch } from 'react-router'
 import Background from '../../components/Background'
 import './styles.scss'
 import api from '../../services/api'
+import { IRecipe } from '../../interfaces/Recipe.model'
 
 interface Params {
   recipe_id: string
 }
 
-interface Recipe {
-  recipe_id: string
-  author: string
-  url: string
-  title: string
-  description: string
-  ingredients: string
-  preparationMode: string
-}
-
 function Recipe() {
   const { params } = useRouteMatch<Params>()
-  const [toShow, setToShow] = useState<Recipe>()
+  const [toShow, setToShow] = useState<IRecipe>()
 
   useEffect(() => {
     api

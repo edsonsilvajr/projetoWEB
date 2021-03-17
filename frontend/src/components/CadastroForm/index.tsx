@@ -48,8 +48,6 @@ function CadastroForm({ isEditable }: Props) {
         }),
       })
 
-  console.log(userSchema)
-
   return (
     <Formik
       initialValues={{

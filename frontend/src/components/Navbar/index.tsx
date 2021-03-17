@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { KeyboardEvent, useEffect, useRef, useState } from 'react'
 import './styles.scss'
 import logo from '../../assets/logo-icon.svg'
 import userIcon from '../../assets/user-icon.svg'
 import searchIcon from '../../assets/search-icon.svg'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import EventEmitter from '../../utils/EventEmitter'
+import api from '../../services/api'
 
 interface IUser {
   uid: number
@@ -25,6 +27,7 @@ const Navbar = () => {
   const user = useSelector((state) => state)
 
   const [modalOpen, setModalOpen] = useState(false)
+  const [inputValue, setInputValue] = useState<string>()
 
   const useOutsideClickEvent = (ref: RefObject<any>) => {
     useEffect(() => {
@@ -62,6 +65,35 @@ const Navbar = () => {
         </Link>
       </div>
     )
+  }
+
+  const handleKeyEvent = (event: KeyboardEvent) => {
+    if (event.key === 'Enter') search()
+  }
+
+  const search = () => {
+    if (inputValue) {
+      api
+        .get('recipe', {
+          params: {
+            getParam: 3,
+            title: inputValue,
+          },
+        })
+        .then((res) => {
+          EventEmitter.emit('search', res.data)
+        })
+    } else {
+      api
+        .get('recipe', {
+          params: {
+            getParam: 2,
+          },
+        })
+        .then((res) => {
+          EventEmitter.emit('search', res.data)
+        })
+    }
   }
 
   const UserControl = ({ user }: Props) => {
@@ -111,8 +143,10 @@ const Navbar = () => {
           type="text"
           className="search"
           placeholder="Busque sua receita"
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyEvent}
         />
-        <button className="searchButton">
+        <button className="searchButton" onClick={search}>
           <img src={searchIcon} alt="Icone de pesquisa" />
         </button>
       </div>

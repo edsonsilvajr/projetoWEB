@@ -150,6 +150,11 @@ a {
   border-radius: 9999px;
   height: 33px;
   width: 33px;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    opacity: 0.8;
+  }
   img {
     inline-size: 25px;
   }
