@@ -12,6 +12,8 @@
   font-size: 24px;
   font-weight: 1000;
   transition: 0.2s;
+  width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .card-title:hover {
@@ -33,6 +35,7 @@
   width: 100%;
   .footerLeft {
     height: 100%;
+    width: 80%;
   }
 }
 
