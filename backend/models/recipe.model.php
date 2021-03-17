@@ -113,6 +113,8 @@ function metodoDelete($receitas, $file_path)
                 file_put_contents($file_path2, json_encode($usuarios));
             }
         }
+
+        echo json_encode($receitas);
     } else {
         http_response_code(404);
         echo "No such recipe to be delete";
