@@ -1,5 +1,7 @@
 <?php
 
+
+
 function metodoPost($id, $receitas, $file_path)
 {
     $receita = json_decode(file_get_contents('php://input'), true);
@@ -95,10 +97,22 @@ function metodoPut($receitas, $file_path)
 function metodoDelete($receitas, $file_path)
 {
     $indice = array_search($_GET['id'], array_column($receitas, 'id'));
+    $file_path2 = getcwd() . "/models/users.json";
+
+    $usuarios = json_decode(file_get_contents($file_path2), true);
+
     if ($indice || $indice === 0) {
         array_splice($receitas, $indice, 1);
         file_put_contents($file_path, json_encode($receitas)); // escrevendo no arquivo
-        echo json_encode($receitas);
+
+        for ($i = 0; $i < sizeof($usuarios); $i++) {
+
+            if (in_Array($_GET['id'], $usuarios[$i]['favorites'])) {
+                $aux = array_search($indice, array_column($usuarios[$i], 'favorites'));
+                array_splice($usuarios[$i]['favorites'], $aux, 1);
+                file_put_contents($file_path2, json_encode($usuarios));
+            }
+        }
     } else {
         http_response_code(404);
         echo "No such recipe to be delete";
