@@ -63,8 +63,16 @@ if (str_contains($metodo, 'POST')) {
                 $usuarios[$indice]['favorites'] = $favoritesBackup;
 
                 $usuarios[$indice]['uid'] = (int)$_GET['uid'];
+                $userToSend = $usuarios[$indice];
+                unset($userToSend['password']);
+
+                $message = [
+                    "data" => $userToSend,
+                    "status" => "Success",
+                    "message" => "Successfully updated!"
+                ];
                 file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
-                echo json_encode($usuarios);
+                echo json_encode($message);
             } else { // 404 not found
                 http_response_code(404);
                 echo "not found";
@@ -73,8 +81,13 @@ if (str_contains($metodo, 'POST')) {
         case '2': //updating favorites list
             if ($indice || $indice === 0) {
                 $usuarios[$indice]['favorites'] = $usuario['favorites'];
+                $message = [
+                    "data" => [],
+                    "status" => "Success",
+                    "message" => "Successfully updated!"
+                ];
                 file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
-                echo json_encode($usuarios);
+                echo json_encode($message);
             } else { // 404 not found
                 http_response_code(404);
                 echo "not found";
