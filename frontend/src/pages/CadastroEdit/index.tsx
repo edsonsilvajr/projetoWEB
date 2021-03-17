@@ -9,7 +9,7 @@ function CadastroEdit() {
   console.log(user)
   return (
     <Background background="background-option1 center">
-      <CadastroForm user={user}></CadastroForm>
+      <CadastroForm isEditable></CadastroForm>
     </Background>
   )
 }
