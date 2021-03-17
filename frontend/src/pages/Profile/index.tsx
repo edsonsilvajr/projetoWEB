@@ -36,6 +36,15 @@ function Profile() {
           return element.authorid === user.uid
         })
         setCards(vetorFiltrado)
+        api
+          .get('user', {
+            params: {
+              uid: user.uid,
+            },
+          })
+          .then((res) => {
+            dispatch({ type: 'SET_USER', payload: res.data })
+          })
       })
   }
 
