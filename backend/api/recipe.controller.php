@@ -44,6 +44,9 @@ if (str_contains($metodo, 'POST')) {
         case '3': // 3 - Get List w/ Filters
             $category = empty($_GET['category']) ? null : $_GET['category'];;
             $title = empty($_GET['title']) ? null : $_GET['title'];
+
+            $input = preg_quote(strToLower($title), '~');
+
             $filterList = [];
             if (!$title && $category) {
                 for ($indice = 0; $indice < sizeof($receitas); $indice++) {
@@ -52,22 +55,25 @@ if (str_contains($metodo, 'POST')) {
                         array_push($filterList, $receitas[$indice]);
                     }
                 }
+                echo json_encode($filterList);
             } else if ($title && $category) {
                 for ($indice = 0; $indice < sizeof($receitas); $indice++) {
                     $finalTitle = strtolower($receitas[$indice]['title']);
                     $finalCategory = strtolower($receitas[$indice]['category']);
 
-                    if (strtolower($category) === $finalCategory && strtolower($title) === $finalTitle) {
+                    if (strtolower($category) === $finalCategory && preg_match('~' . $input . '~', $finalTitle)) {
                         array_push($filterList, $receitas[$indice]);
                     }
                 }
+                echo json_encode($filterList);
             } else if ($title) {
                 for ($indice = 0; $indice < sizeof($receitas); $indice++) {
                     $finalTitle = strtolower($receitas[$indice]['title']);
-                    if (strtolower($title) === $finalTitle) {
+                    if (preg_match('~' . $input . '~', $finalTitle)) {
                         array_push($filterList, $receitas[$indice]);
                     }
                 }
+                echo json_encode($filterList);
             } else {
                 $message = [
                     "status" => "invalid",
@@ -75,9 +81,6 @@ if (str_contains($metodo, 'POST')) {
                 ];
                 echo json_encode($message);
             }
-
-            if (!empty($filterList)) echo json_encode($filterList);
-
             break;
         default:
             break;
