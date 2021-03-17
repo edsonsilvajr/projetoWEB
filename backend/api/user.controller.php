@@ -97,7 +97,7 @@ if (str_contains($metodo, 'POST')) {
 } else if (str_contains($metodo, 'DELETE')) {
     $indice = array_search($_GET['uid'], array_column($usuarios, 'uid'));
     if ($indice || $indice === 0) {
-        unset($usuarios[$indice]);
+        array_splice($usuarios, $indice, 1);
         file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo
         echo json_encode($usuarios);
     } else {

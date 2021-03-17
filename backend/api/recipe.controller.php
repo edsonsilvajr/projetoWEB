@@ -1,15 +1,6 @@
 <?php
-//header('Location: http://localhost:3000/');
 
-//$json = file_get_contents("teste.json");
-
-$file_path = getcwd() . "/models/recipes.json";
-
-$receitas = json_decode(file_get_contents($file_path), true);
-
-
-$receita;
-$id = getRandomId($receitas);
+require('models/recipe.model.php');
 
 function getRandomId($receitas)
 {
@@ -20,71 +11,21 @@ function getRandomId($receitas)
     return $random_id;
 }
 
+$file_path = getcwd() . "/models/recipes.json";
+
+$receitas = json_decode(file_get_contents($file_path), true);
+
+
+
+$receita;
+$id = getRandomId($receitas);
+
+
+
 if (str_contains($metodo, 'POST')) {
-    $receita = json_decode(file_get_contents('php://input'), true);
-    $receita['id'] = $id;
-    array_push($receitas, $receita);
-    file_put_contents($file_path, json_encode($receitas)); // escrevendo no arquivo
-    echo json_encode($receitas);
+    metodoPost($id, $receitas, $file_path);
 } else if (str_contains($metodo, 'GET')) {
-    $indice = array_search($_GET['id'] ?? null, array_column($receitas, 'id'));
-
-    switch ($_GET['getParam']) {
-        case '1': // 1 - Get One
-            if ($indice || $indice === 0) {
-                echo json_encode($receitas[$indice]);
-            } else { // 404 - Not Found
-                http_response_code(404);
-                echo "Not Found";
-            }
-            break;
-        case '2': // 2 - Get List
-            echo json_encode($receitas);
-            break;
-        case '3': // 3 - Get List w/ Filters
-            $category = empty($_GET['category']) ? null : $_GET['category'];;
-            $title = empty($_GET['title']) ? null : $_GET['title'];
-
-            $input = preg_quote(strToLower($title), '~');
-
-            $filterList = [];
-            if (!$title && $category) {
-                for ($indice = 0; $indice < sizeof($receitas); $indice++) {
-                    $finalCategory = strtolower($receitas[$indice]['category']);
-                    if (strtolower($category) === $finalCategory) {
-                        array_push($filterList, $receitas[$indice]);
-                    }
-                }
-                echo json_encode($filterList);
-            } else if ($title && $category) {
-                for ($indice = 0; $indice < sizeof($receitas); $indice++) {
-                    $finalTitle = strtolower($receitas[$indice]['title']);
-                    $finalCategory = strtolower($receitas[$indice]['category']);
-
-                    if (strtolower($category) === $finalCategory && preg_match('~' . $input . '~', $finalTitle)) {
-                        array_push($filterList, $receitas[$indice]);
-                    }
-                }
-                echo json_encode($filterList);
-            } else if ($title) {
-                for ($indice = 0; $indice < sizeof($receitas); $indice++) {
-                    $finalTitle = strtolower($receitas[$indice]['title']);
-                    if (preg_match('~' . $input . '~', $finalTitle)) {
-                        array_push($filterList, $receitas[$indice]);
-                    }
-                }
-                echo json_encode($filterList);
-            } else {
-                $message = [
-                    "status" => "invalid",
-                    "errors" => "no query found"
-                ];
-                echo json_encode($message);
-            }
-            break;
-        default:
-            break;
-    }
+    metodoGet($receitas);
 } else if (str_contains($metodo, 'PUT')) {
     $indice = array_search($_GET['id'], array_column($receitas, 'id'));
     $receita = json_decode(file_get_contents('php://input'), true);
@@ -101,7 +42,7 @@ if (str_contains($metodo, 'POST')) {
 } else if (str_contains($metodo, 'DELETE')) {
     $indice = array_search($_GET['id'], array_column($receitas, 'id'));
     if ($indice || $indice === 0) {
-        unset($receitas[$indice]);
+        array_splice($receitas, $indice, 1);
         file_put_contents($file_path, json_encode($receitas)); // escrevendo no arquivo
         echo json_encode($receitas);
     } else {
