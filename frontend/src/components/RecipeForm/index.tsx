@@ -21,8 +21,8 @@ function RecipeForm({ isEditable, recipeId }: Props) {
     ingredients: '',
     preparationMode: '',
     url: '',
-    authorid: '',
-    author: '',
+    authorid: user.uid,
+    author: user.name,
   })
 
   const history = useHistory()
