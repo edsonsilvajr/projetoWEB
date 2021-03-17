@@ -75,3 +75,32 @@ function metodoGet($receitas)
             break;
     }
 }
+
+function metodoPut($receitas, $file_path)
+{
+    $indice = array_search($_GET['id'], array_column($receitas, 'id'));
+    $receita = json_decode(file_get_contents('php://input'), true);
+
+    if ($indice || $indice === 0) {
+        $receitas[$indice] = $receita;
+        $receitas[$indice]['id'] = (int)$_GET['id'];
+        file_put_contents($file_path, json_encode($receitas)); // escrevendo no arquivo
+        echo json_encode($receitas);
+    } else { // 404 not found
+        http_response_code(404);
+        echo "Receipe Not Found!";
+    }
+}
+
+function metodoDelete($receitas, $file_path)
+{
+    $indice = array_search($_GET['id'], array_column($receitas, 'id'));
+    if ($indice || $indice === 0) {
+        array_splice($receitas, $indice, 1);
+        file_put_contents($file_path, json_encode($receitas)); // escrevendo no arquivo
+        echo json_encode($receitas);
+    } else {
+        http_response_code(404);
+        echo "No such recipe to be delete";
+    }
+}
