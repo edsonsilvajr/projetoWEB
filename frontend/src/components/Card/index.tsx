@@ -12,9 +12,11 @@ import api from '../../services/api'
 interface Props {
   card: ICard
   fav: boolean
+  isEditable?: boolean
+  isRemovable?: boolean
 }
 
-function Card({ card, fav }: Props) {
+function Card({ card, fav, isEditable, isRemovable }: Props) {
   const user = useSelector((state) => state) as IUser
   const dispatch = useDispatch()
 
@@ -38,13 +40,13 @@ function Card({ card, fav }: Props) {
     } else {
       user.favorites.push(card.id)
     }
-    dispatch({ type: 'SET_USER', payload: user })
     api
       .put('user', user, {
         params: { uid: user.uid, getParam: '2' },
       })
       .then((res) => {
         setFavorite(!favorite)
+        dispatch({ type: 'SET_USER', payload: user })
       })
   }
 
@@ -62,7 +64,7 @@ function Card({ card, fav }: Props) {
           </Link>
           <p>{card.description}</p>
         </div>
-        {user && (
+        {user && !isEditable && !isRemovable && (
           <img
             src={handleHover()}
             onMouseEnter={() => setHover(true)}

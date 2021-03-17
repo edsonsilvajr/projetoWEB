@@ -48,13 +48,21 @@ function CadastroForm({ user }: Props) {
         if (!user) {
           api.post('user', values).then(
             (res) => {
-              console.log(res)
+              toast.success('👨‍🍳 ' + 'Usuário cadastrado com sucesso!', {
+                position: 'top-center',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              })
               history.push('/')
             },
             (err) => {
               toast.error('👨‍🍳 ' + err.response.data.errors, {
                 position: 'top-center',
-                autoClose: 5000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -92,7 +100,6 @@ function CadastroForm({ user }: Props) {
           className="containerCadastro"
           onSubmit={handleSubmit}
         >
-          <ToastContainer />
           <h1>{user && 'Editar '}Cadastro</h1>
           <div className="typeContainer">
             <label>Selecione um tipo de cadastro: </label>
@@ -186,7 +193,13 @@ function CadastroForm({ user }: Props) {
             </div>
           )}
           <div className="fieldContainer">
-            <Link to="/">Cancelar</Link>
+            <Link
+              to={() => {
+                return user ? '/profile' : '/'
+              }}
+            >
+              Cancelar
+            </Link>
             <button type="submit">Cadastrar</button>
           </div>
         </form>

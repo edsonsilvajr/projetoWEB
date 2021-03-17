@@ -1,4 +1,9 @@
-@import url(https://db.onlinewebfonts.com/c/a163d087c4bfdff182eb1b4fcc595798?family=Sansation);
+/* @import url(https://db.onlinewebfonts.com/c/a163d087c4bfdff182eb1b4fcc595798?family=Sansation); */
+
+@font-face {
+  font-family: 'Sansation';
+  src: local('Sansation'), url(./assets/Sansation_Light.ttf) format('woff');
+}
 *{
   margin: 0;
   padding: 0;

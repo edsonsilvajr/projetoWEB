@@ -13,17 +13,29 @@ import api from '../../services/api'
 import Card from '../../components/Card'
 import { Link } from 'react-router-dom'
 import addIcon from '../../assets/add-icon.svg'
+import { IRecipe } from '../../interfaces/Recipe.model'
 
 function Profile() {
   const user = useSelector((state) => state) as IUser
   const [cards, setCards] = useState<ICard[]>([])
+  const [favCards, setFavCards] = useState<ICard[]>([])
   useEffect(() => {
+    let isMounted = true
     api.get('recipe', { params: { getParam: 2 } }).then((response) => {
       const vetorFiltrado = response.data.filter(
         (element: ICard) => element.authorid === user.uid
       )
-      setCards(vetorFiltrado)
+      const vetorFavFiltrado = response.data.filter((element: IRecipe) =>
+        user.favorites.includes(element.id)
+      )
+      if (isMounted) {
+        setCards(vetorFiltrado)
+        setFavCards(vetorFavFiltrado)
+      }
     })
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   return (
@@ -84,12 +96,21 @@ function Profile() {
                   <h2>Receitas registradas</h2>
                   <div className="receitas">
                     {cards.map((element) => (
-                      <Card key={element.id} card={element} fav={false} />
+                      <Card
+                        key={element.id}
+                        card={element}
+                        fav={false}
+                        isEditable
+                      />
                     ))}
 
                     <button className="newRecipe">
                       <Link to="/user/recipe-add">
-                        <img src={addIcon} className="iconAdd" alt="icone para adicionar"/>
+                        <img
+                          src={addIcon}
+                          className="iconAdd"
+                          alt="icone para adicionar"
+                        />
                         <p>Adicionar receita</p>
                       </Link>
                     </button>
@@ -101,8 +122,13 @@ function Profile() {
               <div className="bgReceitas">
                 <h2>Receitas favoritas</h2>
                 <div className="receitas">
-                  {cards.map((element) => (
-                    <Card key={element.id} card={element} fav={true} />
+                  {favCards.map((element) => (
+                    <Card
+                      key={element.id}
+                      card={element}
+                      fav={true}
+                      isRemovable
+                    />
                   ))}
                 </div>
               </div>

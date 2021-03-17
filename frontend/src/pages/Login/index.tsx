@@ -37,7 +37,7 @@ function Login() {
               setTimeout(() => {
                 toast.success('👨‍🍳 ' + 'Logado com sucesso!', {
                   position: 'top-center',
-                  autoClose: 5000,
+                  autoClose: 2000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: true,
@@ -49,7 +49,7 @@ function Login() {
             (err) => {
               toast.error('👨‍🍳 ' + err.response.data.errors, {
                 position: 'top-center',
-                autoClose: 5000,
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -70,7 +70,6 @@ function Login() {
           isSubmitting,
         }) => (
           <form onSubmit={handleSubmit} className="login-container">
-            <ToastContainer />
             <h1 className="login-title">Login</h1>
             <div className="login-field">
               <label>Email</label>

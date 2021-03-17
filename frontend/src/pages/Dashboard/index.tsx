@@ -24,14 +24,11 @@ const Dashboard = () => {
 
   return (
     <Background>
-      <>
-        <ToastContainer />
-        <div className="card-row">
-          {cards.map((element) => (
-            <Card key={element.id} card={element} fav={check(element.id)} />
-          ))}
-        </div>
-      </>
+      <div className="card-row">
+        {cards.map((element) => (
+          <Card key={element.id} card={element} fav={check(element.id)} />
+        ))}
+      </div>
     </Background>
   )
 }
