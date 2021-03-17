@@ -5,29 +5,48 @@ import './styles.scss'
 import * as yup from 'yup'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import { IUser } from '../../interfaces/User.model'
+import { useDispatch, useSelector } from 'react-redux'
+import { toastDefaultConfig } from '../../utils/toast.config'
 
 interface Props {
-  user?: IUser
+  isEditable?: boolean
 }
-function CadastroForm({ user }: Props) {
+function CadastroForm({ isEditable }: Props) {
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state) as IUser
+
   const history = useHistory()
 
-  const userSchema = yup.object().shape({
-    name: yup.string().required('* Nome é obrigatório!'),
-    type: yup.string().required(),
-    password: yup.string().required('* A senha é obrigatória!'),
-    gender: yup.string().required('* Gênero é obrigatório!'),
-    date: yup.string().required('* A data de nascimento é obrigatória!'),
-    email: yup.string().email().required('* O email é obrigatório!'),
-    document: yup.string().when('type', {
-      is: 'cozinheiro',
-      then: yup
-        .string()
-        .required('* O documento (quando cozinheiro) é obrigatório!'),
-    }),
-  })
+  const userSchema = !isEditable
+    ? yup.object().shape({
+        name: yup.string().required('* Nome é obrigatório!'),
+        type: yup.string().required(),
+        password: yup.string().required('* A senha é obrigatória!'),
+        gender: yup.string().required('* Gênero é obrigatório!'),
+        date: yup.string().required('* A data de nascimento é obrigatória!'),
+        email: yup.string().email().required('* O email é obrigatório!'),
+        document: yup.string().when('type', {
+          is: 'cozinheiro',
+          then: yup
+            .string()
+            .required('* O documento (quando cozinheiro) é obrigatório!'),
+        }),
+      })
+    : yup.object().shape({
+        name: yup.string().required('* Nome é obrigatório!'),
+        type: yup.string().required(),
+        gender: yup.string().required('* Gênero é obrigatório!'),
+        date: yup.string().required('* A data de nascimento é obrigatória!'),
+        email: yup.string().email().required('* O email é obrigatório!'),
+        document: yup.string().when('type', {
+          is: 'cozinheiro',
+          then: yup
+            .string()
+            .required('* O documento (quando cozinheiro) é obrigatório!'),
+        }),
+      })
 
   console.log(userSchema)
 
@@ -47,32 +66,20 @@ function CadastroForm({ user }: Props) {
       onSubmit={(values, { setSubmitting, setStatus }) => {
         if (!user) {
           api.post('user', values).then(
+            //Adding user
             (res) => {
-              toast.success('👨‍🍳 ' + 'Usuário cadastrado com sucesso!', {
-                position: 'top-center',
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              })
+              toast.success(
+                '👨‍🍳 ' + 'Usuário cadastrado com sucesso!',
+                toastDefaultConfig
+              )
               history.push('/')
             },
             (err) => {
-              toast.error('👨‍🍳 ' + err.response.data.errors, {
-                position: 'top-center',
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              })
+              toast.error('👨‍🍳 ' + err.response.data.errors, toastDefaultConfig)
             }
           )
         } else {
-          console.log('caindo aqui')
+          // Editing user
           api
             .put('user', values, {
               params: {
@@ -81,7 +88,17 @@ function CadastroForm({ user }: Props) {
               },
             })
             .then((res) => {
-              console.log(res)
+              toast.success('👨‍🍳 ' + res.data.message, {
+                position: 'top-center',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              })
+              dispatch({ type: 'SET_USER', payload: res.data.data })
+              history.push('/profile')
             })
         }
       }}
