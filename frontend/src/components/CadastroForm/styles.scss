@@ -59,6 +59,12 @@
   align-items: center;
   padding: 10px;
   position: relative;
+  .error {
+    left: 20px;
+    position: absolute;
+    top: 45px;
+    font-size: 12px;
+  }
   button,
   a {
     border-radius: 50px;
@@ -78,13 +84,6 @@
     color: #b82121;
     cursor: pointer;
   }
-}
-
-.error {
-  left: 20px;
-  position: absolute;
-  top: 45px;
-  font-size: 12px;
 }
 
 .fieldContainer:last-child {

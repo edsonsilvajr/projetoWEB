@@ -1,7 +1,6 @@
-import React, { createElement, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { Route, BrowserRouter, Redirect, RouteProps } from 'react-router-dom'
-import { toast, ToastContainer } from 'react-toastify'
+import React, { createElement } from 'react'
+import { Route, BrowserRouter, Redirect } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import Navbar from './components/Navbar'
 import Cadastro from './pages/Cadastro'
 import CadastroEdit from './pages/CadastroEdit'
@@ -13,14 +12,12 @@ import RecipeAdd from './pages/RecipeAdd'
 import RecipeEdit from './pages/RecipeEdit'
 
 const Routes = () => {
-  const user = useSelector((state) => state)
-
   const PrivateRoute = ({ component, ...rest }: any) => {
     return (
       <Route
         {...rest}
         render={(props) =>
-          user ? (
+          localStorage.getItem('user') ? (
             createElement(component, props)
           ) : (
             <Redirect

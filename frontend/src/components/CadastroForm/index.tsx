@@ -62,7 +62,7 @@ function CadastroForm({ isEditable }: Props) {
       }}
       validationSchema={userSchema}
       onSubmit={(values, { setSubmitting, setStatus }) => {
-        if (!user) {
+        if (!user.uid) {
           api.post('user', values).then(
             //Adding user
             (res) => {
@@ -115,7 +115,7 @@ function CadastroForm({ isEditable }: Props) {
           className="containerCadastro"
           onSubmit={handleSubmit}
         >
-          <h1>{user && 'Editar '}Cadastro</h1>
+          <h1>{user.uid && 'Editar '}Cadastro</h1>
           <div className="typeContainer">
             <label>Selecione um tipo de cadastro: </label>
             <Field as="select" name="type" id="type" value={values.type}>
@@ -175,7 +175,7 @@ function CadastroForm({ isEditable }: Props) {
               {errors.email && touched.email && errors.email}
             </div>
           </div>
-          {!user && (
+          {!user.uid && (
             <div className="fieldContainer">
               <label>Senha:</label>
               <input
@@ -210,7 +210,7 @@ function CadastroForm({ isEditable }: Props) {
           <div className="fieldContainer">
             <Link
               to={() => {
-                return user ? '/profile' : '/'
+                return user.uid ? '/profile' : '/'
               }}
             >
               Cancelar

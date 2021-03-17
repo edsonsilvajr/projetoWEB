@@ -6,7 +6,7 @@ import 'react-tabs/style/react-tabs.css'
 import userProfileIcon from '../../assets/user-profile-icon.svg'
 import favoriteIcon from '../../assets/heart-icon.svg'
 import bookIcon from '../../assets/book-icon.svg'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { IUser } from '../../interfaces/User.model'
 import { ICard } from '../../interfaces/Card.model'
 import api from '../../services/api'
@@ -19,16 +19,38 @@ function Profile() {
   const user = useSelector((state) => state) as IUser
   const [cards, setCards] = useState<ICard[]>([])
   const [favCards, setFavCards] = useState<ICard[]>([])
+
+  const dispatch = useDispatch()
+
+  const onDelete = (element_id: number) => {
+    console.log('caindo aqui')
+    api
+      .delete('recipe', {
+        params: {
+          id: element_id,
+        },
+      })
+      .then((res) => {
+        const vetorFiltrado = res.data.filter((element: ICard) => {
+          console.log(element.authorid, user.uid)
+          return element.authorid === user.uid
+        })
+        setCards(vetorFiltrado)
+      })
+  }
+
   useEffect(() => {
     let isMounted = true
     api.get('recipe', { params: { getParam: 2 } }).then((response) => {
-      const vetorFiltrado = response.data.filter(
-        (element: ICard) => element.authorid === user.uid
-      )
+      const vetorFiltrado = response.data.filter((element: ICard) => {
+        console.log(element.authorid, user.uid)
+        return element.authorid === user.uid
+      })
       const vetorFavFiltrado = response.data.filter((element: IRecipe) =>
         user.favorites.includes(element.id)
       )
       if (isMounted) {
+        console.log(vetorFiltrado)
         setCards(vetorFiltrado)
         setFavCards(vetorFavFiltrado)
       }
@@ -36,7 +58,7 @@ function Profile() {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [user])
 
   return (
     <Background>
@@ -45,7 +67,12 @@ function Profile() {
           <h2>Olá {user.name}!</h2>
         </div>
         <div className="tab">
-          <Tabs defaultIndex={0}>
+          <Tabs
+            selectedIndex={user.tab}
+            onSelect={(index) => {
+              dispatch({ type: 'SET_TAB', payload: index })
+            }}
+          >
             <TabList>
               <Tab>
                 <img src={userProfileIcon} alt="Icone de usuario" />
@@ -95,16 +122,6 @@ function Profile() {
                 <div className="bgReceitas">
                   <h2>Receitas registradas</h2>
                   <div className="receitas">
-                    {cards.map((element) => (
-                      <Card
-                        key={element.id}
-                        card={element}
-                        fav={false}
-                        isEditable
-                        isRemovable
-                      />
-                    ))}
-
                     <button className="newRecipe">
                       <Link to="/user/recipe-add">
                         <img
@@ -115,6 +132,16 @@ function Profile() {
                         <p>Adicionar receita</p>
                       </Link>
                     </button>
+                    {cards.map((element) => (
+                      <Card
+                        key={element.id}
+                        card={element}
+                        fav={false}
+                        isEditable
+                        isRemovable
+                        onDelete={onDelete}
+                      />
+                    ))}
                   </div>
                 </div>
               </TabPanel>

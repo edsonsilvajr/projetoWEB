@@ -16,9 +16,10 @@ interface Props {
   fav: boolean
   isEditable?: boolean
   isRemovable?: boolean
+  onDelete?: (number: number) => void
 }
 
-function Card({ card, fav, isEditable, isRemovable }: Props) {
+function Card({ card, fav, isEditable, isRemovable, onDelete }: Props) {
   const user = useSelector((state) => state) as IUser
   const dispatch = useDispatch()
 
@@ -34,6 +35,10 @@ function Card({ card, fav, isEditable, isRemovable }: Props) {
       return heartHover
     }
     return heartIcon
+  }
+
+  const deleteRecipe = () => {
+    if (onDelete !== undefined) onDelete(card.id)
   }
 
   const setFavorites = () => {
@@ -66,7 +71,7 @@ function Card({ card, fav, isEditable, isRemovable }: Props) {
           </Link>
           <p>{card.description}</p>
         </div>
-        {user && !isEditable && !isRemovable && (
+        {user.uid && !isEditable && !isRemovable && (
           <img
             src={handleHover()}
             onMouseEnter={() => setHover(true)}
@@ -76,18 +81,26 @@ function Card({ card, fav, isEditable, isRemovable }: Props) {
             alt="Icone de favorito"
           />
         )}
-        {user && isEditable && isRemovable && (
+        {user.uid && isEditable && isRemovable && (
           <div className="card-options">
-            <img src={editIcon} className="heartIcon" alt="Icone de edição" />
+            <Link to={`/recipe-edit/${card.id}`}>
+              <img src={editIcon} className="heartIcon" alt="Icone de edição" />
+            </Link>
             <img
               src={deleteIcon}
               className="heartIcon"
               alt="Icone de Remoção"
+              onClick={deleteRecipe}
             />
           </div>
         )}
-        {user && !isEditable && isRemovable && (
-          <img src={deleteIcon} className="heartIcon" alt="Icone de Remoção" />
+        {user.uid && !isEditable && isRemovable && (
+          <img
+            src={deleteIcon}
+            className="heartIcon"
+            alt="Icone de Remoção"
+            onClick={setFavorites}
+          />
         )}
       </div>
     </div>

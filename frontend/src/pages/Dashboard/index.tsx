@@ -28,7 +28,7 @@ const Dashboard = () => {
   }, [])
 
   const check = (elementID: number) => {
-    if (user) return user.favorites.includes(elementID)
+    if (user.uid) return user.favorites.includes(elementID)
     return false
   }
 
