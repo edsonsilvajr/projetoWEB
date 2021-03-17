@@ -1,14 +1,14 @@
 import { Formik } from 'formik'
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Background from '../../components/Background'
 import api from '../../services/api'
 import { useDispatch } from 'react-redux'
 import './styles.scss'
 import * as yup from 'yup'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import jwt_decode from 'jwt-decode'
+import { toastDefaultConfig } from '../../utils/toast.config'
 
 //TODO: atribuir dados para os inputs
 
@@ -35,27 +35,11 @@ function Login() {
               dispatch({ type: 'SET_USER', payload: data.user })
               history.push('/')
               setTimeout(() => {
-                toast.success('👨‍🍳 ' + 'Logado com sucesso!', {
-                  position: 'top-center',
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                })
+                toast.success('👨‍🍳 ' + 'Logado com sucesso!', toastDefaultConfig)
               })
             },
             (err) => {
-              toast.error('👨‍🍳 ' + err.response.data.errors, {
-                position: 'top-center',
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              })
+              toast.error('👨‍🍳 ' + err.response.data.errors, toastDefaultConfig)
             }
           )
         }}

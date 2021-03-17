@@ -6,7 +6,6 @@ import api from '../../services/api'
 import { useSelector } from 'react-redux'
 import { IUser } from '../../interfaces/User.model'
 import { ICard } from '../../interfaces/Card.model'
-import { ToastContainer } from 'react-toastify'
 
 const Dashboard = () => {
   const user = useSelector((state) => state) as IUser
