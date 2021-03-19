@@ -8,6 +8,7 @@ Seguir os passos disponíveis no link para habilitar o mod_rewrite caso esteja d
 # Criar arquivo .htaccess na raiz do xampp (htdocs no caso)
 Criar um arquivo `.htaccess` na pasta htdocs, contendo o seguinte conteúdo:
 ```
+SetEnvIf Authorization .+ HTTP_AUTHORIZATION=$0
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
