@@ -1,11 +1,14 @@
 <?php
 
-
+require('utils/functions.php');
 
 function metodoPost($id, $receitas, $file_path)
 {
     $receita = json_decode(file_get_contents('php://input'), true);
     $receita['id'] = $id;
+
+    if (!validateRecipe($receita)) return;
+
     array_push($receitas, $receita);
     file_put_contents($file_path, json_encode($receitas)); // escrevendo no arquivo
     //echo json_encode($receitas);
@@ -20,7 +23,7 @@ function metodoGet($receitas)
 {
     $indice = array_search($_GET['id'] ?? null, array_column($receitas, 'id'));
 
-    switch ($_GET['getParam']) {
+    switch ($_GET['getParam'] ?? null) {
         case '1': // 1 - Get One
             if ($indice || $indice === 0) {
                 echo json_encode($receitas[$indice]);
@@ -33,7 +36,7 @@ function metodoGet($receitas)
             echo json_encode($receitas);
             break;
         case '3': // 3 - Get List w/ Filters
-            $category = empty($_GET['category']) ? null : $_GET['category'];;
+            $category = empty($_GET['category']) ? null : $_GET['category'];
             $title = empty($_GET['title']) ? null : $_GET['title'];
 
             $input = preg_quote(strToLower($title), '~');
@@ -74,16 +77,21 @@ function metodoGet($receitas)
             }
             break;
         default:
+            http_response_code(400);
+            echo "Bad Request";
             break;
     }
 }
 
 function metodoPut($receitas, $file_path)
 {
-    $indice = array_search($_GET['id'], array_column($receitas, 'id'));
     $receita = json_decode(file_get_contents('php://input'), true);
 
-    if ($indice || $indice === 0) {
+    if (!validateRecipe($receita)) return;
+
+    $indice = array_search($_GET['id'] ?? null, array_column($receitas, 'id'));
+
+    if ($indice !== false) {
         $receitas[$indice] = $receita;
         $receitas[$indice]['id'] = (int)$_GET['id'];
         file_put_contents($file_path, json_encode($receitas)); // escrevendo no arquivo
@@ -96,12 +104,12 @@ function metodoPut($receitas, $file_path)
 
 function metodoDelete($receitas, $file_path)
 {
-    $indice = array_search($_GET['id'], array_column($receitas, 'id'));
+    $indice = array_search($_GET['id'] ?? null, array_column($receitas, 'id'));
     $file_path2 = getcwd() . "/models/users.json";
 
     $usuarios = json_decode(file_get_contents($file_path2), true);
 
-    if ($indice || $indice === 0) {
+    if ($indice !== false) {
         array_splice($receitas, $indice, 1);
         file_put_contents($file_path, json_encode($receitas)); // escrevendo no arquivo
 
@@ -117,6 +125,6 @@ function metodoDelete($receitas, $file_path)
         echo json_encode($receitas);
     } else {
         http_response_code(404);
-        echo "No such recipe to be delete";
+        echo "No such recipe to be deleted";
     }
 }

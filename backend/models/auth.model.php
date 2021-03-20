@@ -23,14 +23,10 @@ function isAuthenticated($receivedToken)
     $valid_signature = json_encode($valid_signature);
     $valid_signature = explode('"', $valid_signature)[1];
 
-    if ($received_signature === $valid_signature) {
-        echo json_encode(["status" => "autenticado"]);
-    } else {
-        echo json_encode(["status" => "não autenticado"]);
-    }
+    return $received_signature === $valid_signature;
 }
 
-function metodoPost($users)
+function post($users)
 {
     $json = json_decode(file_get_contents('php://input'), true);
     $user_index = array_search($json['email'] ?? null, array_column($users, 'email'));
@@ -89,7 +85,11 @@ function metodoPost($users)
     }
 }
 
-function metodoGet()
+function isAuth()
 {
-    isAuthenticated($_SERVER['REDIRECT_HTTP_AUTHORIZATION']);
+    if (!empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+        return isAuthenticated($_SERVER['REDIRECT_HTTP_AUTHORIZATION']);
+    } else {
+        return false;
+    }
 }

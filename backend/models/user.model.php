@@ -1,11 +1,26 @@
 <?php
 
+require("utils/functions.php");
+
 function metodoPost($id, $usuarios, $file_path)
 {
     $usuario = json_decode(file_get_contents('php://input'), true);
+    $usuario['favorites'] = [];
     $usuario['uid'] = $id;
+    if (!validateUser($usuario)) return;
+    if (!isset($usuario['password'])) {
+        $message = [
+            "data" => [],
+            "status" => "Missing Parameters",
+            "errors" => "Missing password in payload!"
+        ];
+        http_response_code(400);
+        header('Content-Type: application/json');
+        echo json_encode($message);
+        return;
+    }
+    //var_dump($usuario);
     if (!in_array($usuario['email'], array_column($usuarios, 'email'))) {
-        $usuario['favorites'] = [];
         if (strtolower($usuario['type']) == 'aprendiz') {
             $usuario['document'] = null;
         }
@@ -41,10 +56,14 @@ function metodoGet($usuarios)
 
 function metodoPut($usuarios, $file_path)
 {
-    $indice = array_search($_GET['uid'], array_column($usuarios, 'uid'));
     $usuario = json_decode(file_get_contents('php://input'), true);
+    $usuario['password'] = '';
+    $usuario['favorites'] = [];
+    if (!validateUser($usuario)) return;
 
-    switch ($_GET['getParam']) {
+    $indice = array_search($_GET['uid'] ?? null, array_column($usuarios, 'uid'));
+
+    switch ($_GET['getParam'] ?? null) {
         case '1': // updating entire user
             if ($indice || $indice === 0) {
                 $passwordBackup = $usuarios[$indice]['password'];
@@ -86,12 +105,16 @@ function metodoPut($usuarios, $file_path)
                 echo "not found";
             }
             break;
+        default:
+            http_response_code(400);
+            echo "Bad request";
+            break;
     }
 }
 
 function metodoDelete($usuarios, $file_path)
 {
-    $indice = array_search($_GET['uid'], array_column($usuarios, 'uid'));
+    $indice = array_search($_GET['uid'] ?? null, array_column($usuarios, 'uid'));
     if ($indice || $indice === 0) {
         array_splice($usuarios, $indice, 1);
         file_put_contents($file_path, json_encode($usuarios)); // escrevendo no arquivo

@@ -7,9 +7,22 @@ $file_path = getcwd() . "/models/users.json";
 $users = json_decode(file_get_contents($file_path), true);
 
 if (str_contains($metodo, 'POST')) {
-    metodoPost($users);
+    post($users);
 }
 
 if (str_contains($metodo, 'GET')) {
-    metodoGet();
+    if (isAuth()) {
+        $message = [
+            'message' => 'User authenticated!',
+            'status' => 'success',
+        ];
+        http_response_code(200);
+        echo $message;
+    } else {
+        http_response_code(401);
+        echo $message = [
+            'message' => 'User not authenticated!',
+            'status' => 'success',
+        ];
+    }
 }

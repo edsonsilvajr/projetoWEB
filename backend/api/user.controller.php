@@ -2,6 +2,7 @@
 
 
 require('models/user.model.php');
+require('models/auth.model.php');
 
 
 function getRandomId($usuarios)
@@ -25,7 +26,23 @@ if (str_contains($metodo, 'POST')) {
 } else if (str_contains($metodo, 'GET')) {
     metodoGet($usuarios);
 } else if (str_contains($metodo, 'PUT')) {
-    metodoPut($usuarios, $file_path);
+    if (isAuth()) {
+        metodoPut($usuarios, $file_path);
+    } else {
+        $message = [
+            'error' => 'User not authenticated!'
+        ];
+        http_response_code(401);
+        echo json_encode($message);
+    }
 } else if (str_contains($metodo, 'DELETE')) {
-    metodoDelete($usuarios, $file_path);
+    if (isAuth()) {
+        metodoDelete($usuarios, $file_path);
+    } else {
+        $message = [
+            'error' => 'User not authenticated!'
+        ];
+        http_response_code(401);
+        echo json_encode($message);
+    }
 }
