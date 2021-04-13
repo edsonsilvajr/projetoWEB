@@ -22,6 +22,7 @@ $id = getRandomId($usuarios);
 
 
 if (str_contains($metodo, 'POST')) {
+    echo "test";
     metodoPost($id, $usuarios, $file_path);
 } else if (str_contains($metodo, 'GET')) {
     metodoGet($usuarios);
@@ -37,8 +38,10 @@ if (str_contains($metodo, 'POST')) {
     }
 } else if (str_contains($metodo, 'DELETE')) {
     if (isAuth()) {
+
         metodoDelete($usuarios, $file_path);
     } else {
+
         $message = [
             'error' => 'User not authenticated!'
         ];

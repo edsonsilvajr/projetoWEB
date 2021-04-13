@@ -7,6 +7,27 @@ require('conexao.php');
 
 function metodoPost($id, $receitas, $file_path)
 {
+
+    $receita = json_decode(file_get_contents('php://input'), true);
+    $receita[0]['id'] = $id;
+    echo "DEU Quase";
+
+    $bd = Conexao::get();
+    $query = $bd->prepare("INSERT INTO recipes (id, author, authorid, title, url, description, ingredients, preparationMode, category) VALUES(:id, :author, :authorid, :title, :url, :description, :ingredients, :preparationMode, :category)");
+    $query->bindParam(':id', $receita[0]['id']);
+    $query->bindParam(':author', $receita[0]['author']);
+    $query->bindParam(':authorid', $receita[0]['authorid']);
+    $query->bindParam(':title', $receita[0]['title']);
+    $query->bindParam(':url', $receita[0]['url']);
+    $query->bindParam(':description', $receita[0]['description']);
+    $query->bindParam(':ingredients', $receita[0]['ingredients']);
+    $query->bindParam(':preparationMode', $receita[0]['preparationMode']);
+    $query->bindParam(':category', $receita[0]['category']);
+    $query->execute();
+
+    $recipes = $query->fetchAll(PDO::FETCH_OBJ);
+    echo json_encode($recipes);
+    /*
     $receita = json_decode(file_get_contents('php://input'), true);
     $receita['id'] = $id;
 
@@ -19,7 +40,7 @@ function metodoPost($id, $receitas, $file_path)
         'Status' => 'Sucess',
         'Message' => 'Recipe successfully registered!'
     ];
-    echo json_encode($message);
+    echo json_encode($message);*/
 }
 
 function metodoGet($receitas)
@@ -28,7 +49,7 @@ function metodoGet($receitas)
     $bd = Conexao::get();
     $query = $bd->prepare('SELECT * FROM recipes');
     $query->execute();
-    $recipes = $query->fetchAll(PDO::FETCH_OBJ);
+    $recipes = $query->fetch(PDO::FETCH_OBJ);
     echo json_encode($recipes);
 
     // essa logica está comentada apenas para exemplo
@@ -98,6 +119,23 @@ function metodoGet($receitas)
 
 function metodoPut($receitas, $file_path)
 {
+
+    $receita = json_decode(file_get_contents('php://input'), true);
+    $bd = Conexao::get();
+    $query = $bd->prepare("UPDATE recipes SET title = :title, url = :url, description = :description, preparationMode = :preparationMode, category = :category WHERE recipes.id = :id");
+    $query->bindParam(':id', $receita[0]['id']);
+    $query->bindParam(':title', $receita[0]['title']);
+    $query->bindParam(':url', $receita[0]['url']);
+    $query->bindParam(':description', $receita[0]['description']);
+    $query->bindParam(':preparationMode', $receita[0]['preparationMode']);
+    $query->bindParam(':category', $receita[0]['category']);
+    $query->execute();
+
+    $user = $query->fetchAll(PDO::FETCH_OBJ);
+    print_r($user);
+
+    /*
+
     $receita = json_decode(file_get_contents('php://input'), true);
 
     if (!validateRecipe($receita)) return;
@@ -113,10 +151,28 @@ function metodoPut($receitas, $file_path)
         http_response_code(404);
         echo "Receipe Not Found!";
     }
+    */
 }
 
 function metodoDelete($receitas, $file_path)
 {
+
+    $indice = $_GET['id'];
+
+    $bd = Conexao::get();
+    $query = $bd->prepare("DELETE FROM recipes WHERE recipes.id = :id");
+    $query->bindParam(':id', $indice);
+    $query->execute();
+    $recipe = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($recipe == null) {
+        echo json_encode($recipe);
+    } else {
+        http_response_code(404);
+        echo "Error User Not Removed";
+    }
+
+    /*
     $indice = array_search($_GET['id'] ?? null, array_column($receitas, 'id'));
     $file_path2 = getcwd() . "/models/users.json";
 
@@ -139,5 +195,5 @@ function metodoDelete($receitas, $file_path)
     } else {
         http_response_code(404);
         echo "No such recipe to be deleted";
-    }
+    }*/
 }
