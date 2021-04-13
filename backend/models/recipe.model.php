@@ -2,6 +2,9 @@
 
 require('utils/functions.php');
 
+require('conexao.php');
+
+
 function metodoPost($id, $receitas, $file_path)
 {
     $receita = json_decode(file_get_contents('php://input'), true);
@@ -21,7 +24,17 @@ function metodoPost($id, $receitas, $file_path)
 
 function metodoGet($receitas)
 {
-    $indice = array_search($_GET['id'] ?? null, array_column($receitas, 'id'));
+    // testando o banco de dados, retornando a lista de receitas
+    $bd = Conexao::get();
+    $query = $bd->prepare('SELECT * FROM recipes');
+    $query->execute();
+    $recipes = $query->fetchAll(PDO::FETCH_OBJ);
+    echo json_encode($recipes);
+
+    // essa logica está comentada apenas para exemplo
+
+
+    /* $indice = array_search($_GET['id'] ?? null, array_column($receitas, 'id'));
 
     switch ($_GET['getParam'] ?? null) {
         case '1': // 1 - Get One
@@ -80,7 +93,7 @@ function metodoGet($receitas)
             http_response_code(400);
             echo "Bad Request";
             break;
-    }
+    } */
 }
 
 function metodoPut($receitas, $file_path)
