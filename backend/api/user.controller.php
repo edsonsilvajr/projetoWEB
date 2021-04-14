@@ -22,30 +22,27 @@ $id = getRandomId($usuarios);
 
 
 if (str_contains($metodo, 'POST')) {
-    echo "test";
     metodoPost($id, $usuarios, $file_path);
 } else if (str_contains($metodo, 'GET')) {
     metodoGet($usuarios);
 } else if (str_contains($metodo, 'PUT')) {
     if (isAuth()) {
-        metodoPut($usuarios, $file_path);
-    } else {
         $message = [
             'error' => 'User not authenticated!'
         ];
         http_response_code(401);
         echo json_encode($message);
+    } else {
+        metodoPut($usuarios, $file_path);
     }
 } else if (str_contains($metodo, 'DELETE')) {
     if (isAuth()) {
-
-        metodoDelete($usuarios, $file_path);
-    } else {
-
         $message = [
             'error' => 'User not authenticated!'
         ];
         http_response_code(401);
         echo json_encode($message);
+    } else {
+        metodoDelete($usuarios, $file_path);
     }
 }

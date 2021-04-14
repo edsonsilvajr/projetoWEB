@@ -27,7 +27,7 @@ function metodoPost($id, $receitas, $file_path)
     $query->execute();
 
     $message = [
-        'Status' => 'Sucess',
+        'Status' => 'Success',
         'Message' => 'Recipe successfully registered!'
     ];
     echo json_encode($message);
@@ -172,14 +172,19 @@ function metodoDelete($receitas, $file_path)
 {
 
     $indice = $_GET['id'];
-
     $bd = Conexao::get();
-    $query = $bd->prepare("DELETE FROM recipes WHERE recipes.id = :id");
+
+    $query = $bd->prepare("SELECT * FROM recipes WHERE recipes.id = :id");
     $query->bindParam(':id', $indice);
     $query->execute();
     $recipe = $query->fetchAll(PDO::FETCH_OBJ);
 
-    if ($recipe == null) {
+
+
+    if ($recipe != null) {
+        $query = $bd->prepare("DELETE FROM recipes WHERE recipes.id = :id");
+        $query->bindParam(':id', $indice);
+        $query->execute();
         $message = [
             'Status' => 'Success',
             'Message' => 'Recipe successfully deleted!'
