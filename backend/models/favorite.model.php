@@ -4,11 +4,10 @@ require("utils/functions.php");
 
 require('conexao.php');
 
-function metodoPost($id, $usuarios, $file_path)
+function metodoPost()
 {
     $favorite['uid'] = $_GET['uid'];
     $favorite['rid'] = $_GET['rid'];
-    $favorite['id'] = $id;
     echo json_encode($_POST);
     print_r($_POST);
 
@@ -20,15 +19,15 @@ function metodoPost($id, $usuarios, $file_path)
     $query->execute();
 }
 
-function metodoGet($usuarios)
+function metodoGet()
 {
 }
 
-function metodoPut($usuarios, $file_path)
+function metodoPut()
 {
 }
 
-function metodoDelete($usuarios, $file_path)
+function metodoDelete()
 {
     $indice1 = $_GET['uid'];
     $indice2 = $_GET['rid'];

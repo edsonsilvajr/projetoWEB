@@ -9,21 +9,21 @@ function metodoPost($id, $receitas, $file_path)
 {
 
     $receita = json_decode(file_get_contents('php://input'), true);
-    $receita[0]['id'] = $id;
+    $receita['id'] = $id;
 
     if (!validateRecipe($receita)) return;
 
     $bd = Conexao::get();
     $query = $bd->prepare("INSERT INTO recipes (id, author, authorid, title, url, description, ingredients, preparationMode, category) VALUES(:id, :author, :authorid, :title, :url, :description, :ingredients, :preparationMode, :category)");
-    $query->bindParam(':id', $receita[0]['id']);
-    $query->bindParam(':author', $receita[0]['author']);
-    $query->bindParam(':authorid', $receita[0]['authorid']);
-    $query->bindParam(':title', $receita[0]['title']);
-    $query->bindParam(':url', $receita[0]['url']);
-    $query->bindParam(':description', $receita[0]['description']);
-    $query->bindParam(':ingredients', $receita[0]['ingredients']);
-    $query->bindParam(':preparationMode', $receita[0]['preparationMode']);
-    $query->bindParam(':category', $receita[0]['category']);
+    $query->bindParam(':id', $receita['id']);
+    $query->bindParam(':author', $receita['author']);
+    $query->bindParam(':authorid', $receita['authorid']);
+    $query->bindParam(':title', $receita['title']);
+    $query->bindParam(':url', $receita['url']);
+    $query->bindParam(':description', $receita['description']);
+    $query->bindParam(':ingredients', $receita['ingredients']);
+    $query->bindParam(':preparationMode', $receita['preparationMode']);
+    $query->bindParam(':category', $receita['category']);
     $query->execute();
 
     $message = [
@@ -60,6 +60,7 @@ function metodoGet($receitas)
             $query = $bd->prepare('SELECT * FROM recipes');
             $query->execute();
             $recipes = $query->fetchall(PDO::FETCH_OBJ);
+
 
             if ($recipes != null) {
                 echo json_encode($recipes);
@@ -142,19 +143,19 @@ function metodoPut($receitas, $file_path)
     $bd = Conexao::get();
 
     $query = $bd->prepare("SELECT * FROM recipes WHERE recipes.id = :id");
-    $query->bindParam(':id', $receita[0]['id']);
+    $query->bindParam(':id', $receita['id']);
     $query->execute();
     $resul = $query->fetchAll(PDO::FETCH_OBJ);
 
     if ($resul != null) {
 
         $query = $bd->prepare("UPDATE recipes SET title = :title, url = :url, description = :description, preparationMode = :preparationMode, category = :category WHERE recipes.id = :id");
-        $query->bindParam(':id', $receita[0]['id']);
-        $query->bindParam(':title', $receita[0]['title']);
-        $query->bindParam(':url', $receita[0]['url']);
-        $query->bindParam(':description', $receita[0]['description']);
-        $query->bindParam(':preparationMode', $receita[0]['preparationMode']);
-        $query->bindParam(':category', $receita[0]['category']);
+        $query->bindParam(':id', $receita['id']);
+        $query->bindParam(':title', $receita['title']);
+        $query->bindParam(':url', $receita['url']);
+        $query->bindParam(':description', $receita['description']);
+        $query->bindParam(':preparationMode', $receita['preparationMode']);
+        $query->bindParam(':category', $receita['category']);
         $query->execute();
 
         $message = [

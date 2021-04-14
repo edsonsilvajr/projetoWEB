@@ -3,24 +3,10 @@
 require('models/recipe.model.php');
 require('models/auth.model.php');
 
-function getRandomId($receitas)
-{
-    $random_id = random_int(0, 1000000);
-    while (array_search($random_id, array_column($receitas, 'id'))) {
-        $random_id = random_int(0, 1000000);
-    }
-    return $random_id;
-}
-
-$file_path = getcwd() . "/models/recipes.json";
-
-$receitas = json_decode(file_get_contents($file_path), true);
-
-$id = getRandomId($receitas);
 
 if (str_contains($metodo, 'POST')) {
     if (isAuth()) {
-        metodoPost($id, $receitas, $file_path);
+        metodoPost();
     } else {
         $message = [
             'error' => 'User not authenticated!'
@@ -32,7 +18,7 @@ if (str_contains($metodo, 'POST')) {
     metodoGet($receitas);
 } else if (str_contains($metodo, 'PUT')) {
     if (isAuth()) {
-        metodoPut($receitas, $file_path);
+        metodoPut();
     } else {
         $message = [
             'error' => 'User not authenticated!'
@@ -48,6 +34,6 @@ if (str_contains($metodo, 'POST')) {
         http_response_code(401);
         echo json_encode($message);
     } else {
-        metodoDelete($receitas, $file_path);
+        metodoDelete();
     }
 }
