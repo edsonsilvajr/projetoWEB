@@ -4,11 +4,10 @@ require("utils/functions.php");
 
 require('conexao.php');
 
-function metodoPost($id, $usuarios, $file_path)
+function metodoPost()
 {
     $bd = Conexao::get();
     $usuario = json_decode(file_get_contents('php://input'), true);
-    $usuario['uid'] = $id;
     echo json_encode($usuario);
 
     if (!validateUser($usuario)) return;
@@ -63,7 +62,7 @@ function metodoPost($id, $usuarios, $file_path)
     }
 }
 
-function metodoGet($usuarios)
+function metodoGet()
 {
     $indice = $_GET['uid'];
 
@@ -88,7 +87,7 @@ function metodoGet($usuarios)
     }
 }
 
-function metodoPut($usuarios, $file_path)
+function metodoPut()
 {
     $bd = Conexao::get();
     $usuario = json_decode(file_get_contents('php://input'), true);
@@ -126,7 +125,7 @@ function metodoPut($usuarios, $file_path)
     }
 }
 
-function metodoDelete($usuarios, $file_path)
+function metodoDelete()
 {
     $indice = $_GET['uid'];
     $bd = Conexao::get();
