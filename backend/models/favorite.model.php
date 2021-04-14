@@ -31,7 +31,6 @@ function metodoDelete()
 {
     $indice1 = $_GET['uid'];
     $indice2 = $_GET['rid'];
-
     $bd = Conexao::get();
     $query = $bd->prepare("DELETE FROM favorites WHERE favorites.uid = :uid AND favorites.rid = :rid");
     $query->bindParam(':uid', $indice1);
