@@ -7,7 +7,6 @@ function isAuthenticated($receivedToken)
 
     //TODO: CRIAR EXPIRAÇÃO
 
-
     $token = explode('Bearer ', $receivedToken);
     $token = explode('.', $token[1]);
 
