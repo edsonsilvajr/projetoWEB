@@ -5,11 +5,10 @@ require('utils/functions.php');
 require('conexao.php');
 
 
-function metodoPost($id, $receitas, $file_path)
+function metodoPost()
 {
 
     $receita = json_decode(file_get_contents('php://input'), true);
-    $receita['id'] = $id;
 
     if (!validateRecipe($receita)) return;
 
@@ -33,7 +32,7 @@ function metodoPost($id, $receitas, $file_path)
     echo json_encode($message);
 }
 
-function metodoGet($receitas)
+function metodoGet()
 {
     $indice = $_GET['id'] ?? null;
     $bd = Conexao::get();
@@ -133,7 +132,7 @@ function metodoGet($receitas)
     }
 }
 
-function metodoPut($receitas, $file_path)
+function metodoPut()
 {
 
     $receita = json_decode(file_get_contents('php://input'), true);
@@ -169,7 +168,7 @@ function metodoPut($receitas, $file_path)
     }
 }
 
-function metodoDelete($receitas, $file_path)
+function metodoDelete()
 {
 
     $indice = $_GET['id'];
