@@ -32,14 +32,13 @@ if (str_contains($metodo, 'POST')) {
     metodoGet($receitas);
 } else if (str_contains($metodo, 'PUT')) {
     if (isAuth()) {
-
-        metodoPut($receitas, $file_path);
-    } else {
         $message = [
             'error' => 'User not authenticated!'
         ];
         http_response_code(401);
         echo json_encode($message);
+    } else {
+        metodoPut($receitas, $file_path);
     }
 } else if (str_contains($metodo, 'DELETE')) {
     if (isAuth()) {

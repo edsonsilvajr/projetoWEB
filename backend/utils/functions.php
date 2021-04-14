@@ -7,8 +7,7 @@ function validateUser($user)
     isset($user['type']) &&
     isset($user['gender']) &&
     isset($user['date']) &&
-    isset($user['email']) &&
-    isset($user['favorites']))) {
+    isset($user['email']))) {
     $message = [
       "data" => [],
       "status" => "Missing Parameters",
@@ -24,14 +23,14 @@ function validateUser($user)
 
 function validateRecipe($recipe)
 {
-  if (!(isset($recipe['id']) &&
-    isset($recipe['title']) &&
-    isset($recipe['description']) &&
-    isset($recipe['ingredients']) &&
-    isset($recipe['preparationMode']) &&
-    isset($recipe['url']) &&
-    isset($recipe['authorid']) &&
-    isset($recipe['author']))) {
+  if (!(isset($recipe[0]['id']) &&
+    isset($recipe[0]['title']) &&
+    isset($recipe[0]['description']) &&
+    isset($recipe[0]['ingredients']) &&
+    isset($recipe[0]['preparationMode']) &&
+    isset($recipe[0]['url']) &&
+    isset($recipe[0]['authorid']) &&
+    isset($recipe[0]['author']))) {
     $message = [
       "data" => [],
       "status" => "Missing Parameters",
