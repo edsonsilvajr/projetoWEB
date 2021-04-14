@@ -2,7 +2,7 @@
 
 require("utils/functions.php");
 
-require('conexao.php');
+require_once('conexao.php');
 
 function metodoPost()
 {

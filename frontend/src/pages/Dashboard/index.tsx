@@ -18,9 +18,15 @@ const Dashboard = () => {
     }
     const listener = EventEmitter.addListener('search', updateList)
 
-    api.get('recipe', { params: { getParam: 2 } }).then((response) => {
-      setCards(response.data)
-    })
+    api.get('recipe', { params: { getParam: 2 } }).then(
+      (response) => {
+        setCards(response.data)
+      },
+      (err) => {
+        setCards([])
+        console.log(err)
+      }
+    )
 
     return () => {
       listener.remove()

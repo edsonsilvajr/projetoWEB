@@ -23,14 +23,13 @@ function validateUser($user)
 
 function validateRecipe($recipe)
 {
-  if (!(isset($recipe[0]['id']) &&
-    isset($recipe[0]['title']) &&
-    isset($recipe[0]['description']) &&
-    isset($recipe[0]['ingredients']) &&
-    isset($recipe[0]['preparationMode']) &&
-    isset($recipe[0]['url']) &&
-    isset($recipe[0]['authorid']) &&
-    isset($recipe[0]['author']))) {
+  if (!(isset($recipe['title']) &&
+    isset($recipe['description']) &&
+    isset($recipe['ingredients']) &&
+    isset($recipe['preparationMode']) &&
+    isset($recipe['url']) &&
+    isset($recipe['authorid']) &&
+    isset($recipe['author']))) {
     $message = [
       "data" => [],
       "status" => "Missing Parameters",

@@ -2,7 +2,7 @@
 
 require('utils/functions.php');
 
-require('conexao.php');
+require_once('conexao.php');
 
 
 function metodoPost()
@@ -56,7 +56,10 @@ function metodoGet()
 
         case '2': //GET ALL THE RECIPES FROM THE DATABASE
 
-            $query = $bd->prepare('SELECT * FROM recipes');
+            $query = $bd->prepare(!$indice ? 'SELECT * FROM recipes' : 'SELECT * FROM recipes WHERE recipes.authorid = :id');
+            if ($indice) {
+                $query->bindParam(':id', $indice);
+            }
             $query->execute();
             $recipes = $query->fetchall(PDO::FETCH_OBJ);
 

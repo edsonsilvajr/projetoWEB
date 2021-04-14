@@ -23,7 +23,6 @@ function Profile() {
   const dispatch = useDispatch()
 
   const onDelete = (element_id: number) => {
-    console.log('caindo aqui')
     api
       .delete('recipe', {
         params: {
@@ -31,11 +30,13 @@ function Profile() {
         },
       })
       .then((res) => {
-        const vetorFiltrado = res.data.filter((element: ICard) => {
-          console.log(element.authorid, user.uid)
-          return element.authorid === user.uid
-        })
-        setCards(vetorFiltrado)
+        api
+          .get('recipe', { params: { getParam: 2, id: user.uid } })
+          .then((response) => {
+            const vetorFiltrado = response.data
+            console.log(response)
+            setCards(vetorFiltrado)
+          })
         api
           .get('user', {
             params: {
@@ -50,20 +51,23 @@ function Profile() {
 
   useEffect(() => {
     let isMounted = true
-    api.get('recipe', { params: { getParam: 2 } }).then((response) => {
-      const vetorFiltrado = response.data.filter((element: ICard) => {
-        console.log(element.authorid, user.uid)
-        return element.authorid === user.uid
+    api
+      .get('recipe', { params: { getParam: 2, id: user.uid } })
+      .then((response) => {
+        const vetorFiltrado = response.data
+        console.log(response)
+        if (isMounted) {
+          setCards(vetorFiltrado)
+        }
       })
-      const vetorFavFiltrado = response.data.filter((element: IRecipe) =>
-        user.favorites.includes(element.id)
-      )
-      if (isMounted) {
-        console.log(vetorFiltrado)
-        setCards(vetorFiltrado)
-        setFavCards(vetorFavFiltrado)
-      }
-    })
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  useEffect(() => {
+    let isMounted = true
+    console.log('caindo aqui')
     return () => {
       isMounted = false
     }

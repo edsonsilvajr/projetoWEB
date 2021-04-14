@@ -1,5 +1,7 @@
 <?php
 
+require_once('conexao.php');
+
 function isAuthenticated($receivedToken)
 {
 
@@ -26,14 +28,18 @@ function isAuthenticated($receivedToken)
     return $received_signature === $valid_signature;
 }
 
-function post($users)
+function post()
 {
     $json = json_decode(file_get_contents('php://input'), true);
-    $user_index = array_search($json['email'] ?? null, array_column($users, 'email'));
-    if ($user_index || $user_index === 0) {
-        if ($users[$user_index]['password'] === $json['password']) {
-            // Gerando o token - JWT
+    //$user_index = array_search($json['email'] ?? null, array_column($users, 'email'));
+    $bd = Conexao::get();
+    $query = $bd->prepare('SELECT * FROM users WHERE users.email = :email');
+    $query->bindParam(':email', $json['email']);
+    $query->execute();
+    $user = $query->fetch(PDO::FETCH_OBJ);
 
+    if ($user) {
+        if ($user->password === $json['password']) {
             $header = [
                 'alg' => 'HS256',
                 'typ' => 'jwt'
@@ -43,11 +49,11 @@ function post($users)
             $header = base64_encode($header);
 
             $payload = [
-                'uid' => $users[$user_index]['uid'],
-                'name' => $users[$user_index]['name'],
-                'type' => $users[$user_index]['type'],
-                'favorites' => $users[$user_index]['favorites']
+                'uid' => $user->uid,
+                'name' => $user->name,
+                'type' => $user->type
             ];
+
             $payload = json_encode($payload);
             $payload = base64_encode($payload);
 
@@ -56,8 +62,8 @@ function post($users)
 
             $key = $header . '.' . $payload . '.' . $signature;
 
-            $userToSend = $users[$user_index];
-            unset($userToSend['password']);
+            $userToSend = $user;
+            unset($user->password);
             $message = [
                 "data" => ["token" => $key, "user" => $userToSend],
                 "status" => "success"
