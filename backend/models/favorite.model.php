@@ -8,12 +8,9 @@ function metodoPost()
 {
     $favorite['uid'] = $_GET['uid'];
     $favorite['rid'] = $_GET['rid'];
-    echo json_encode($_POST);
-    print_r($_POST);
 
     $bd = Conexao::get();
-    $query = $bd->prepare("INSERT INTO favorites (id, uid, rid) VALUES(:id, :uid, :rid)");
-    $query->bindParam(':id',  $favorite['id']);
+    $query = $bd->prepare("INSERT INTO favorites (uid, rid) VALUES(:uid, :rid)");
     $query->bindParam(':uid', $favorite['uid']);
     $query->bindParam(':rid', $favorite['rid']);
     $query->execute();
@@ -21,10 +18,46 @@ function metodoPost()
 
 function metodoGet()
 {
+    $indice = $_GET['uid'];
+
+    $bd = Conexao::get();
+
+    $query = $bd->prepare("SELECT * FROM recipes INNER JOIN favorites WHERE favorites.uid =:uid AND recipes.id = favorites.rid");
+    $query->bindParam(':uid', $indice);
+    $query->execute();
 }
 
 function metodoPut()
 {
+    $favorite['uid'] = $_GET['uid'];
+    $favorite['rid'] = $_GET['rid'];
+
+    $bd = Conexao::get();
+    $query = $bd->prepare('SELECT * FROM favorites WHERE favorites.uid = :uid AND favorite.rid = :rid');
+    $query->bindParam(':uid', $favorite['uid']);
+    $query->bindParam(':rid', $favorite['rid']);
+    $query->execute();
+    $favorite = $query->fetch(PDO::FETCH_OBJ);
+
+    if ($favorite) {
+        $query = $bd->prepare("DELETE * FROM favorites WHERE favorites.uid = :uid AND favorite.rid = :rid");
+        $query->bindParam(':uid', $favorite['uid']);
+        $query->bindParam(':rid', $favorite['rid']);
+        $query->execute();
+        $favorites = $query->fetchAll(PDO::FETCH_OBJ);
+        echo json_encode($favorites);
+    } else {
+        $query = $bd->prepare("INSERT INTO favorites (uid, rid) VALUES(:uid, :rid)");
+        $query->bindParam(':uid', $favorite['uid']);
+        $query->bindParam(':rid', $favorite['rid']);
+        $query->execute();
+
+        $message = [
+            'Status' => 'Success',
+            'Message' => 'Recipe Marked as Favorite'
+        ];
+        echo json_encode($message);
+    }
 }
 
 function metodoDelete()
