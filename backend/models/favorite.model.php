@@ -25,6 +25,9 @@ function metodoGet()
     $query = $bd->prepare("SELECT * FROM recipes INNER JOIN favorites WHERE favorites.uid =:uid AND recipes.id = favorites.rid");
     $query->bindParam(':uid', $indice);
     $query->execute();
+
+    $favorites = $query->fetchAll(PDO::FETCH_OBJ);
+    echo json_encode($favorites);
 }
 
 function metodoPut()
@@ -44,8 +47,11 @@ function metodoPut()
         $query->bindParam(':uid', $favorite['uid']);
         $query->bindParam(':rid', $favorite['rid']);
         $query->execute();
-        $favorites = $query->fetchAll(PDO::FETCH_OBJ);
-        echo json_encode($favorites);
+        $message = [
+            'Status' => 'Success',
+            'Message' => 'Recipe Removed from Favorites'
+        ];
+        echo json_encode($message);
     } else {
         $query = $bd->prepare("INSERT INTO favorites (uid, rid) VALUES(:uid, :rid)");
         $query->bindParam(':uid', $favorite['uid']);
