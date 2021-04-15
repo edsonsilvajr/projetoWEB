@@ -61,7 +61,7 @@ function CadastroForm({ isEditable }: Props) {
         document: user?.document || '',
       }}
       validationSchema={userSchema}
-      onSubmit={(values, { setSubmitting, setStatus }) => {
+      onSubmit={(values, {}) => {
         if (!user.uid) {
           api.post('user', values).then(
             //Adding user

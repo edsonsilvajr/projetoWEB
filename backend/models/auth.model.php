@@ -48,10 +48,17 @@ function post()
             $header = json_encode($header);
             $header = base64_encode($header);
 
+            $query = $bd->prepare("SELECT rid FROM favorites WHERE favorites.uid = :uid");
+            $query->bindParam(':uid', $user->uid);
+            $query->execute();
+            $recipes = $query->fetchAll(PDO::FETCH_COLUMN);
+            $user->favorites = $recipes;
+
             $payload = [
                 'uid' => $user->uid,
                 'name' => $user->name,
-                'type' => $user->type
+                'type' => $user->type,
+                'favorites' => $user->favorites
             ];
 
             $payload = json_encode($payload);
@@ -63,6 +70,7 @@ function post()
             $key = $header . '.' . $payload . '.' . $signature;
 
             $userToSend = $user;
+
             unset($user->password);
             $message = [
                 "data" => ["token" => $key, "user" => $userToSend],

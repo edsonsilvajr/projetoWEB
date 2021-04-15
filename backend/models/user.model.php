@@ -100,25 +100,17 @@ function metodoPut()
 
     if ($resul != null) {
 
-        $query = $bd->prepare("UPDATE users SET name = :name, type = :type, password = :password, gender = :gender, date = :date, email = :email, document = :document WHERE users.uid = :uid");
+        $query = $bd->prepare("UPDATE users SET name = :name, type = :type, gender = :gender, date = :date, email = :email, document = :document WHERE users.uid = :uid");
         $query->bindParam(':uid', $usuario['uid']);
         $query->bindParam(':name', $usuario['name']);
         $query->bindParam(':type', $usuario['type']);
-        $query->bindParam(':password', $usuario['password']);
         $query->bindParam(':gender', $usuario['gender']);
         $query->bindParam(':date', $usuario['date']);
         $query->bindParam(':email', $usuario['email']);
         $query->bindParam(':document', $usuario['document']);
         $query->execute();
-
-        $user = $query->fetchAll(PDO::FETCH_OBJ);
-
-        $message = [
-            'Status' => 'Success',
-            'Message' => 'User successfully updated!'
-        ];
-
-        echo json_encode($message);
+        metodoGet();
+        //echo json_encode($user);
     } else { // 404 not found
         http_response_code(404);
         echo "User not found";

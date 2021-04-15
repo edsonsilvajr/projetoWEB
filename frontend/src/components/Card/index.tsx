@@ -11,6 +11,8 @@ import { ICard } from '../../interfaces/Card.model'
 import { IUser } from '../../interfaces/User.model'
 import { useDispatch, useSelector } from 'react-redux'
 import api from '../../services/api'
+import { toast } from 'react-toastify'
+import { toastDefaultConfig } from '../../utils/toast.config'
 interface Props {
   card: ICard
   fav: boolean
@@ -48,13 +50,18 @@ function Card({ card, fav, isEditable, isRemovable, onDelete }: Props) {
       user.favorites.push(card.id)
     }
     api
-      .put('user', user, {
-        params: { uid: user.uid, getParam: '2' },
+      .put('favorite', null, {
+        params: { uid: user.uid, rid: card.id },
       })
-      .then((res) => {
-        setFavorite(!favorite)
-        dispatch({ type: 'SET_USER', payload: user })
-      })
+      .then(
+        (res) => {
+          setFavorite(!favorite)
+          dispatch({ type: 'SET_USER', payload: user })
+        },
+        (err) => {
+          toast.error('👨‍🍳 ' + err.response.data.errors, toastDefaultConfig)
+        }
+      )
   }
 
   //define se o coração vai existir ou não, pegar futuramente do context API/ Redux

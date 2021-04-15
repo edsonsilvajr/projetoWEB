@@ -36,14 +36,14 @@ function metodoPut()
     $favorite['rid'] = $_GET['rid'];
 
     $bd = Conexao::get();
-    $query = $bd->prepare('SELECT * FROM favorites WHERE favorites.uid = :uid AND favorite.rid = :rid');
+    $query = $bd->prepare('SELECT * FROM favorites WHERE favorites.uid = :uid AND favorites.rid = :rid');
     $query->bindParam(':uid', $favorite['uid']);
     $query->bindParam(':rid', $favorite['rid']);
     $query->execute();
-    $favorite = $query->fetch(PDO::FETCH_OBJ);
+    $favorites = $query->fetch(PDO::FETCH_OBJ);
 
-    if ($favorite) {
-        $query = $bd->prepare("DELETE * FROM favorites WHERE favorites.uid = :uid AND favorite.rid = :rid");
+    if ($favorites) {
+        $query = $bd->prepare("DELETE FROM favorites WHERE favorites.uid = :uid AND favorites.rid = :rid");
         $query->bindParam(':uid', $favorite['uid']);
         $query->bindParam(':rid', $favorite['rid']);
         $query->execute();
