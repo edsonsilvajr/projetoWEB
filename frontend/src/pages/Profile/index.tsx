@@ -14,6 +14,7 @@ import Card from '../../components/Card'
 import { Link } from 'react-router-dom'
 import addIcon from '../../assets/add-icon.svg'
 import { IRecipe } from '../../interfaces/Recipe.model'
+import EventEmitter from '../../utils/EventEmitter'
 
 function Profile() {
   const user = useSelector((state) => state) as IUser
@@ -23,6 +24,7 @@ function Profile() {
   const dispatch = useDispatch()
 
   const onDelete = (element_id: number) => {
+    console.log('caindo aqui ao tirar favorito?')
     api
       .delete('recipe', {
         params: {
@@ -60,18 +62,32 @@ function Profile() {
           setCards(vetorFiltrado)
         }
       })
+    api
+      .get('favorite', {
+        params: {
+          uid: user.uid,
+        },
+      })
+      .then((res) => {
+        console.log(res)
+        setFavCards(res.data)
+      })
     return () => {
       isMounted = false
     }
   }, [])
 
   useEffect(() => {
-    let isMounted = true
-    console.log('caindo aqui')
+    const listener = EventEmitter.addListener(
+      'favoriteRemoved',
+      (favorites: any[]) => {
+        setFavCards(favorites)
+      }
+    )
     return () => {
-      isMounted = false
+      listener.remove()
     }
-  }, [user])
+  }, [])
 
   return (
     <Background>

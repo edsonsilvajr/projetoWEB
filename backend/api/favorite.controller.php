@@ -1,31 +1,16 @@
 <?php
 
+use projetoweb\models\Favorite;
 
-require('models/favorite.model.php');
-require('models/auth.model.php');
-
-if (str_contains($metodo, 'POST')) {
-    metodoPost();
-} else if (str_contains($metodo, 'GET')) {
-    metodoGet($usuarios);
-} else if (str_contains($metodo, 'PUT')) {
-    if (isAuth()) {
-        metodoPut();
-    } else {
-        $message = [
-            'error' => 'User not authenticated!'
-        ];
-        http_response_code(401);
-        echo json_encode($message);
+class FavoriteController
+{
+    private $favoriteModel;
+    public function __construct()
+    {
+        $this->favoriteModel = new Favorite();
     }
-} else if (str_contains($metodo, 'DELETE')) {
-    if (isAuth()) {
-        metodoDelete();
-    } else {
-        $message = [
-            'error' => 'User not authenticated!'
-        ];
-        http_response_code(401);
-        echo json_encode($message);
+    public function put()
+    {
+        $this->favoriteModel->favorite();
     }
 }

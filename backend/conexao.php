@@ -1,5 +1,10 @@
 <?php
 
+namespace projetoweb;
+
+use PDO;
+use Exception;
+
 class Conexao
 {
   private static $instance;

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import api from '../../services/api'
 import { toast } from 'react-toastify'
 import { toastDefaultConfig } from '../../utils/toast.config'
+import EventEmitter from '../../utils/EventEmitter'
 interface Props {
   card: ICard
   fav: boolean
@@ -57,6 +58,11 @@ function Card({ card, fav, isEditable, isRemovable, onDelete }: Props) {
         (res) => {
           setFavorite(!favorite)
           dispatch({ type: 'SET_USER', payload: user })
+          if (isRemovable && !isEditable) {
+            api.get('favorite', { params: { uid: user.uid } }).then((res) => {
+              EventEmitter.emit('favoriteRemoved', res.data)
+            })
+          }
         },
         (err) => {
           toast.error('👨‍🍳 ' + err.response.data.errors, toastDefaultConfig)

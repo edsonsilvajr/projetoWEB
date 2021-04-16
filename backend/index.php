@@ -1,20 +1,11 @@
 <?php
-// API Web Simples
-header("Access-Control-Allow-Origin: *"); // CORS
-header("Access-Control-Allow-Headers: *"); // CORS
-header("Access-Control-Allow-Methods: POST, PUT, GET, DELETE");
+require("vendor/autoload.php");
 
-$recurso = $_SERVER['REQUEST_URI'] ?? 'index';
-$metodo = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+use Pecee\SimpleRouter\SimpleRouter as Router;
 
-$recurso = explode('?', $recurso);
-$url = $recurso[0];
-$query = $recurso[1] ?? null;
+Router::get('/api/user', 'UserController@get');
+Router::get('/api/recipe', 'RecipeController@get');
 
-$controlador = ".$url.controller.php";
+Router::put('/api/favorite', 'FavoriteController@put');
 
-if (file_exists($controlador)) {
-    require($controlador);
-} else {
-    echo "Erro 500: Este recurso não existe!";
-}
+Router::start();
