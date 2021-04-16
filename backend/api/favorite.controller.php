@@ -4,7 +4,7 @@ use projetoweb\models\Favorite;
 
 class FavoriteController
 {
-    private $favoriteModel;
+    protected $favoriteModel;
     public function __construct()
     {
         $this->favoriteModel = new Favorite();

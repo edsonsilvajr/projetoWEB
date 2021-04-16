@@ -6,8 +6,8 @@ use PDO;
 
 class Favorite extends Model
 {
-    private $uid;
-    private $rid;
+    protected $uid;
+    protected $rid;
 
     public function favorite()
     {

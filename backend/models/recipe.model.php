@@ -9,15 +9,15 @@ use PDO;
 
 class Recipe extends Model
 {
-    private $id;
-    private $author;
-    private $authorid;
-    private $title;
-    private $url;
-    private $description;
-    private $ingredients;
-    private $preparationMode;
-    private $category;
+    protected $id;
+    protected $author;
+    protected $authorid;
+    protected $title;
+    protected $url;
+    protected $description;
+    protected $ingredients;
+    protected $preparationMode;
+    protected $category;
 
     public function saveRecipe()
     {

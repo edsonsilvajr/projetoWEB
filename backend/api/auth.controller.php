@@ -2,23 +2,34 @@
 
 require("models/auth.model.php");
 
-if (str_contains($metodo, 'POST')) {
-    post();
-}
+class AuthController
+{
+    protected $authModel;
+    public function __construct()
+    {
+        //$authModel = new Auth();
+    }
 
-if (str_contains($metodo, 'GET')) {
-    if (isAuth()) {
-        $message = [
-            'message' => 'User authenticated!',
-            'status' => 'success',
-        ];
-        http_response_code(200);
-        echo $message;
-    } else {
-        http_response_code(401);
-        echo $message = [
-            'message' => 'User not authenticated!',
-            'status' => 'success',
-        ];
+    public function post()
+    {
+        post();
+    }
+
+    public function isAuthenticated()
+    {
+        if (isAuth()) {
+            $message = [
+                'message' => 'User authenticated!',
+                'status' => 'success',
+            ];
+            http_response_code(200);
+            echo $message;
+        } else {
+            http_response_code(401);
+            echo $message = [
+                'message' => 'User not authenticated!',
+                'status' => 'success',
+            ];
+        }
     }
 }

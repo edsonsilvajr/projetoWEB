@@ -4,7 +4,7 @@ use projetoweb\models\Recipe;
 
 class RecipeController
 {
-    private $recipeModel;
+    protected $recipeModel;
     public function __construct()
     {
         $this->recipeModel = new Recipe();

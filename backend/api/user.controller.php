@@ -1,10 +1,11 @@
 <?php
 
 use projetoweb\models\User;
+use projetoweb\utils\Validator;
 
 class UserController
 {
-    private $userModel;
+    protected $userModel;
     public function __construct()
     {
         $this->userModel = new User();
@@ -12,11 +13,99 @@ class UserController
 
     public function get()
     {
+        //indice a ser lido
+        if (!isset($_GET['uid'])) {
+            $message = [
+                "data" => [],
+                "status" => "Missing parameters in query",
+                "errors" => "Missing 'uid' in query"
+            ];
+            echo json_encode($message);
+            return;
+        }
+
         $indice = $_GET['uid'];
+
+        //tentando ler usuário do banco
         try {
-            echo $this->userModel->readUser($indice);
+            $this->userModel->uid = $indice;
+            echo $this->userModel->readUser();
         } catch (Exception $e) {
-            if ($e->getCode() == 1) {
+            //usuário não encontrado
+            $this->errorMessage($e);
+        }
+    }
+
+    public function post()
+    {
+        //pegando usuário do payload
+        $usuario = json_decode(file_get_contents('php://input'), true);
+
+        //validando usuário e retornando mensagem caso não seja valido
+        if (!Validator::validate('user', $usuario)) {
+            return;
+        };
+        if (!isset($usuario['password'])) {
+            $message = [
+                "data" => [],
+                "status" => "Missing Parameters",
+                "errors" => "Missing password in payload!"
+            ];
+            http_response_code(400);
+            header('Content-Type: application/json');
+            echo json_encode($message);
+        }
+
+        //setando campos do objeto
+        $this->userModel->setByArray($usuario);
+
+        //tentando salvar no banco
+        try {
+            echo $this->userModel->saveUser();
+        } catch (Exception $e) {
+            $this->errorMessage($e);
+        }
+    }
+
+    public function put()
+    {
+        $usuario = json_decode(file_get_contents('php://input'), true);
+        if (!Validator::validate('user', $usuario)) return;
+
+        $this->userModel->setByArray($usuario);
+        try {
+            $this->userModel->alterUser();
+        } catch (Exception $e) {
+            $this->errorMessage($e);
+        }
+    }
+
+    public function delete()
+    {
+        if (!isset($_GET['uid'])) {
+            $message = [
+                "data" => [],
+                "status" => "Missing parameters in query",
+                "errors" => "Missing 'uid' in query"
+            ];
+            echo json_encode($message);
+            return;
+        }
+
+        $indice = $_GET['uid'];
+
+        try {
+            $this->userModel->uid = $indice;
+            echo $this->userModel->deleteUser();
+        } catch (Exception $e) {
+            $this->errorMessage($e);
+        }
+    }
+
+    public function errorMessage(Exception $e)
+    {
+        switch ($e->getCode()) {
+            case 1:
                 $message = [
                     "data" => [],
                     "status" => "Not Found",
@@ -25,56 +114,23 @@ class UserController
                 http_response_code(404);
                 header('Content-Type: application/json');
                 echo json_encode($message);
-            } else {
+                break;
+
+            case 2:
+                $message = [
+                    "data" => [],
+                    "status" => "Conflict",
+                    "errors" => "Email already registered!"
+                ];
+                http_response_code(409);
+                header('Content-Type: application/json');
+                echo json_encode($message);
+                break;
+
+            default:
                 http_response_code(400);
                 throw $e;
-            }
+                break;
         }
     }
-
-    public function post()
-    {
-        $this->userModel->saveUser();
-    }
-
-    public function put()
-    {
-        $this->userModel->saveUser();
-    }
-
-    public function delete()
-    {
-        $this->userModel->saveUser();
-    }
 }
-
-/* require('models/auth.model.php');
-
-
-if (str_contains($metodo, 'POST')) {
-    //defino o usuario
-
-    metodoPost();
-} else if (str_contains($metodo, 'GET')) {
-    metodoGet();
-} else if (str_contains($metodo, 'PUT')) {
-    if (isAuth()) {
-        metodoPut();
-    } else {
-        $message = [
-            'error' => 'User not authenticated!'
-        ];
-        http_response_code(401);
-        echo json_encode($message);
-    }
-} else if (str_contains($metodo, 'DELETE')) {
-    if (isAuth()) {
-        metodoDelete();
-    } else {
-        $message = [
-            'error' => 'User not authenticated!'
-        ];
-        http_response_code(401);
-        echo json_encode($message);
-    }
-} */
