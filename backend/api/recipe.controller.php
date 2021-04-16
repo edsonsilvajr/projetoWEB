@@ -15,6 +15,7 @@ class RecipeController
     {
 
         if (!isset($_GET['id']) && !isset($_GET['category']) && !isset($_GET['title']) && !isset($_GET['getParam'])) {
+            http_response_code(400);
             $message = [
                 "data" => [],
                 "status" => "Missing parameters in query",
@@ -82,6 +83,7 @@ class RecipeController
     public function delete()
     {
         if (!isset($_GET['id'])) {
+            http_response_code(400);
             $message = [
                 "data" => [],
                 "status" => "Missing parameters in query",
@@ -122,42 +124,3 @@ class RecipeController
         }
     }
 }
-
-/* 
-require('models/recipe.model.php');
-require('models/auth.model.php');
-
-
-if (str_contains($metodo, 'POST')) {
-    if (isAuth()) {
-        metodoPost();
-    } else {
-        $message = [
-            'error' => 'User not authenticated!'
-        ];
-        http_response_code(401);
-        echo json_encode($message);
-    }
-} else if (str_contains($metodo, 'GET')) {
-    metodoGet();
-} else if (str_contains($metodo, 'PUT')) {
-    if (isAuth()) {
-        metodoPut();
-    } else {
-        $message = [
-            'error' => 'User not authenticated!'
-        ];
-        http_response_code(401);
-        echo json_encode($message);
-    }
-} else if (str_contains($metodo, 'DELETE')) {
-    if (isAuth()) {
-        metodoDelete();
-    } else {
-        $message = [
-            'error' => 'User not authenticated!'
-        ];
-        http_response_code(401);
-        echo json_encode($message);
-    }
-} */

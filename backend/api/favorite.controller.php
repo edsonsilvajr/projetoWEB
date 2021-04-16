@@ -11,6 +11,16 @@ class FavoriteController
     }
     public function put()
     {
+        if (!isset($_GET['uid']) && !isset($_GET['rid'])) {
+            http_response_code(400);
+            $message = [
+                "data" => [],
+                "status" => "Missing parameters in query",
+                "errors" => "Missing 'uid/rid' in query"
+            ];
+            echo json_encode($message);
+            return;
+        }
         try {
             $this->favoriteModel->uid = $_GET['uid'];
             $this->favoriteModel->rid = $_GET['rid'];
@@ -22,6 +32,16 @@ class FavoriteController
 
     public function get()
     {
+        if (!isset($_GET['uid'])) {
+            http_response_code(400);
+            $message = [
+                "data" => [],
+                "status" => "Missing parameters in query",
+                "errors" => "Missing 'uid' in query"
+            ];
+            echo json_encode($message);
+            return;
+        }
         $indice = $_GET['uid'];
         try {
             $this->favoriteModel->uid = $indice;
@@ -38,7 +58,7 @@ class FavoriteController
                 $message = [
                     "data" => [],
                     "status" => "Not Found",
-                    "errors" => "User not found"
+                    "errors" => $e->getMessage()
                 ];
                 http_response_code(404);
                 header('Content-Type: application/json');

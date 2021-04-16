@@ -21,20 +21,7 @@ class AuthController
 
     public function isAuthenticated()
     {
-        if ($this->authModel->isAuth()) {
-            $message = [
-                'message' => 'User authenticated!',
-                'status' => 'success',
-            ];
-            http_response_code(200);
-            echo $message;
-        } else {
-            http_response_code(401);
-            echo $message = [
-                'message' => 'User not authenticated!',
-                'status' => 'success',
-            ];
-        }
+        return $this->authModel->isAuth();
     }
 
     public function errorMessage(Exception $e)

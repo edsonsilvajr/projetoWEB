@@ -15,6 +15,7 @@ class UserController
     {
         //indice a ser lido
         if (!isset($_GET['uid'])) {
+            http_response_code(400);
             $message = [
                 "data" => [],
                 "status" => "Missing parameters in query",
@@ -83,6 +84,7 @@ class UserController
     public function delete()
     {
         if (!isset($_GET['uid'])) {
+            http_response_code(400);
             $message = [
                 "data" => [],
                 "status" => "Missing parameters in query",

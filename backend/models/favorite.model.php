@@ -13,6 +13,32 @@ class Favorite extends Model
     public function favorite()
     {
         try {
+            $query = $this->bd->prepare('SELECT * FROM users WHERE users.uid=:uid');
+            $query->bindParam(':uid', $this->uid);
+            $query->execute();
+            $user = $query->fetch(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        if ($user == NULL) {
+            throw new Exception('User not Found', 1);
+        }
+
+        try {
+            $query = $this->bd->prepare('SELECT * FROM recipes WHERE recipes.id=:rid');
+            $query->bindParam(':rid', $this->rid);
+            $query->execute();
+            $recipe = $query->fetch(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        if ($recipe == NULL) {
+            throw new Exception('Recipe not Found', 1);
+        }
+
+        try {
             $query = $this->bd->prepare('SELECT * FROM favorites WHERE favorites.uid = :uid AND favorites.rid = :rid');
             $query->bindParam(':uid', $this->uid);
             $query->bindParam(':rid', $this->rid);
