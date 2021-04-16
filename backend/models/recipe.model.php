@@ -21,7 +21,7 @@ class Recipe extends Model
 
     public function saveRecipe()
     {
-        
+
 
         try {
             $query = $this->bd->prepare("INSERT INTO recipes (id, author, authorid, title, url, description, ingredients, preparationMode, category) VALUES(:id, :author, :authorid, :title, :url, :description, :ingredients, :preparationMode, :category)");
@@ -87,7 +87,7 @@ class Recipe extends Model
 
     public function deleteRecipe()
     {
-        
+
         try {
             $query = $this->bd->prepare("SELECT * FROM recipes WHERE recipes.id = :id");
             $query->bindParam(':id', $this->id);
@@ -133,20 +133,20 @@ class Recipe extends Model
                 if ($recipe != null) {
                     echo json_encode($recipe);
                 } else {
-                    throw new Exception("No Recipes found", 1)
+                    throw new Exception("No Recipes found", 1);
                 }
 
                 break;
 
             case '2': //GET ALL THE RECIPES FROM THE DATABASE
-                try{
-                $query = $this->bd->prepare(!$this->id ? 'SELECT * FROM recipes' : 'SELECT * FROM recipes WHERE recipes.authorid = :id');
-                if ($indice) {
-                    $query->bindParam(':id', $this->id);
-                }
-                $query->execute();
-                $recipes = $query->fetchall(PDO::FETCH_OBJ);
-                echo json_encode($recipes);
+                try {
+                    $query = $this->bd->prepare(!$this->id ? 'SELECT * FROM recipes' : 'SELECT * FROM recipes WHERE recipes.authorid = :id');
+                    if ($this->id) {
+                        $query->bindParam(':id', $this->id);
+                    }
+                    $query->execute();
+                    $recipes = $query->fetchall(PDO::FETCH_OBJ);
+                    echo json_encode($recipes);
                 } catch (Exception $e) {
                     throw $e;
                 }
@@ -155,11 +155,11 @@ class Recipe extends Model
             case '3':
 
                 if (!$this->title && $this->category) {
-                    try{
-                    $query = $this->bd->prepare('SELECT * FROM recipes WHERE lower(recipes.category)=:category');
-                    $query->bindParam(':category', $this->category);
-                    $query->execute();
-                    $recipes = $query->fetchAll(PDO::FETCH_OBJ);
+                    try {
+                        $query = $this->bd->prepare('SELECT * FROM recipes WHERE lower(recipes.category)=:category');
+                        $query->bindParam(':category', $this->category);
+                        $query->execute();
+                        $recipes = $query->fetchAll(PDO::FETCH_OBJ);
                     } catch (Exception $e) {
                         throw $e;
                     }
@@ -170,12 +170,12 @@ class Recipe extends Model
                         throw new Exception("No Recipes found", 1);
                     }
                 } else if ($this->title && $this->category) {
-                    try{
-                    $query = $this->bd->prepare('SELECT * FROM recipes WHERE lower(recipes.category) LIKE :category AND lower(recipes.title) LIKE "%":title"%" ');
-                    $query->bindParam(':category', $this->category);
-                    $query->bindParam(':title', $this->title);
-                    $query->execute();
-                    $recipes = $query->fetchAll(PDO::FETCH_OBJ);
+                    try {
+                        $query = $this->bd->prepare('SELECT * FROM recipes WHERE lower(recipes.category) LIKE :category AND lower(recipes.title) LIKE "%":title"%" ');
+                        $query->bindParam(':category', $this->category);
+                        $query->bindParam(':title', $this->title);
+                        $query->execute();
+                        $recipes = $query->fetchAll(PDO::FETCH_OBJ);
                     } catch (Exception $e) {
                         throw $e;
                     }
@@ -183,18 +183,18 @@ class Recipe extends Model
                     if ($recipes != null) {
                         echo json_encode($recipes);
                     } else {
-                        hthrow new Exception("No Recipes found", 1);
+                        throw new Exception("No Recipes found", 1);
                     }
                 } else if ($this->title) {
-                    try{
-                    $query = $this->bd->prepare('SELECT * FROM recipes WHERE lower(recipes.title) LIKE "%":title"%" ');
-                    $query->bindParam(':title', $this->title);
-                    $query->execute();
-                    $recipes = $query->fetchAll(PDO::FETCH_OBJ);
+                    try {
+                        $query = $this->bd->prepare('SELECT * FROM recipes WHERE lower(recipes.title) LIKE "%":title"%" ');
+                        $query->bindParam(':title', $this->title);
+                        $query->execute();
+                        $recipes = $query->fetchAll(PDO::FETCH_OBJ);
                     } catch (Exception $e) {
                         throw $e;
                     }
-                    
+
                     if ($recipes != null) {
                         echo json_encode($recipes);
                     } else {
