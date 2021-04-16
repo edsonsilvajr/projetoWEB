@@ -74,7 +74,7 @@ class UserController
 
         $this->userModel->setByArray($usuario);
         try {
-            $this->userModel->alterUser();
+            echo $this->userModel->alterUser();
         } catch (Exception $e) {
             $this->errorMessage($e);
         }

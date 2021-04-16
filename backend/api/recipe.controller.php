@@ -14,11 +14,11 @@ class RecipeController
     public function get()
     {
 
-        if (!isset($_GET['id']) && !isset($_GET['category']) && !isset($_GET['title'])) {
+        if (!isset($_GET['id']) && !isset($_GET['category']) && !isset($_GET['title']) && !isset($_GET['getParam'])) {
             $message = [
                 "data" => [],
                 "status" => "Missing parameters in query",
-                "errors" => "Missing 'id or category or title' in query"
+                "errors" => "Missing 'id/category/title/getParam' in query"
             ];
             echo json_encode($message);
             return;
@@ -46,6 +46,7 @@ class RecipeController
     {
         //pegando usuário do payload
         $receita = json_decode(file_get_contents('php://input'), true);
+        var_dump($receita);
 
         //validando usuário e retornando mensagem caso não seja valido
         if (!Validator::validate('recipe', $receita)) {
@@ -53,7 +54,7 @@ class RecipeController
         };
 
         //setando campos do objeto
-        $this->userModel->setByArray($receita);
+        $this->recipeModel->setByArray($receita);
         try {
             $this->recipeModel->saveRecipe();
         } catch (Exception $e) {
@@ -70,7 +71,7 @@ class RecipeController
             return;
         }
 
-        $this->userModel->setByArray($receita);
+        $this->recipeModel->setByArray($receita);
         try {
             $this->recipeModel->alterRecipe();
         } catch (Exception $e) {

@@ -21,12 +21,10 @@ class Recipe extends Model
 
     public function saveRecipe()
     {
-
-
         try {
             $query = $this->bd->prepare("INSERT INTO recipes (id, author, authorid, title, url, description, ingredients, preparationMode, category) VALUES(:id, :author, :authorid, :title, :url, :description, :ingredients, :preparationMode, :category)");
             $query->bindParam(':id', $this->id);
-            $query->bindParam(':author', $this->aauthor);
+            $query->bindParam(':author', $this->author);
             $query->bindParam(':authorid', $this->authorid);
             $query->bindParam(':title', $this->title);
             $query->bindParam(':url', $this->url);

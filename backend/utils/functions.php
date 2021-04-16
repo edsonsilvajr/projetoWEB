@@ -24,13 +24,13 @@ class Validator
       }
       return true;
     } else {
-      if (!(isset($recipe['title']) &&
-        isset($recipe['description']) &&
-        isset($recipe['ingredients']) &&
-        isset($recipe['preparationMode']) &&
-        isset($recipe['url']) &&
-        isset($recipe['authorid']) &&
-        isset($recipe['author']))) {
+      if (!(isset($toBeValidated['title']) &&
+        isset($toBeValidated['description']) &&
+        isset($toBeValidated['ingredients']) &&
+        isset($toBeValidated['preparationMode']) &&
+        isset($toBeValidated['url']) &&
+        isset($toBeValidated['authorid']) &&
+        isset($toBeValidated['author']))) {
         $message = [
           "data" => [],
           "status" => "Missing Parameters",
