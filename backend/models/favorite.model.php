@@ -22,7 +22,7 @@ class Favorite extends Model
         }
 
         if ($user == NULL) {
-            throw new Exception('User not Found', 1);
+            throw new Exception('User not Found', 404);
         }
 
         try {
@@ -35,7 +35,7 @@ class Favorite extends Model
         }
 
         if ($recipe == NULL) {
-            throw new Exception('Recipe not Found', 1);
+            throw new Exception('Recipe not Found', 404);
         }
 
         try {
@@ -81,11 +81,16 @@ class Favorite extends Model
 
     function getFavorites()
     {
-        $query = $this->bd->prepare("SELECT *, recipes.id as id FROM recipes INNER JOIN favorites WHERE favorites.uid =:uid AND recipes.id = favorites.rid");
-        $query->bindParam(':uid', $this->uid);
-        $query->execute();
+        try {
+            $query = $this->bd->prepare("SELECT *, recipes.id as id FROM recipes INNER JOIN favorites WHERE favorites.uid =:uid AND recipes.id = favorites.rid");
+            $query->bindParam(':uid', $this->uid);
+            $query->execute();
 
-        $favorites = $query->fetchAll(PDO::FETCH_OBJ);
+            $favorites = $query->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            throw $e;
+        }
+
         return json_encode($favorites);
     }
 }

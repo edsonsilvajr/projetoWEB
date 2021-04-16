@@ -83,6 +83,9 @@ const Navbar = () => {
         .then((res) => {
           EventEmitter.emit('search', res.data)
         })
+        .catch((err) => {
+          EventEmitter.emit('search', [])
+        })
     } else {
       api
         .get('recipe', {

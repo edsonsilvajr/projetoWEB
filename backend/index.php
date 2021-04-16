@@ -13,7 +13,6 @@ use Pecee\SimpleRouter\SimpleRouter as Router;
 $verifyAuth = new AuthController();
 
 if ($verifyAuth->isAuthenticated()) {
-  Router::post('/api/user', 'UserController@post');
   Router::put('/api/user', 'UserController@put');
   Router::delete('/api/user', 'UserController@delete');
 
@@ -24,7 +23,7 @@ if ($verifyAuth->isAuthenticated()) {
   Router::get('/api/favorite', 'FavoriteController@get');
   Router::put('/api/favorite', 'FavoriteController@put');
 } else {
-  Router::match(['post', 'put', 'delete'], '/api/user', function () {
+  Router::match(['put', 'delete'], '/api/user', function () {
     http_response_code(401);
     $message = [
       'message' => 'User not authenticated!',
@@ -54,6 +53,7 @@ if ($verifyAuth->isAuthenticated()) {
 
 //ENDPOINTS DE USER
 Router::get('/api/user', 'UserController@get');
+Router::post('/api/user', 'UserController@post');
 
 //ENDPOINTS DE RECEITAS
 Router::get('/api/recipe', 'RecipeController@get');

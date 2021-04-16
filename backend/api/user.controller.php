@@ -2,6 +2,7 @@
 
 use projetoweb\models\User;
 use projetoweb\utils\Validator;
+use projetoweb\utils\Error;
 
 class UserController
 {
@@ -15,13 +16,7 @@ class UserController
     {
         //indice a ser lido
         if (!isset($_GET['uid'])) {
-            http_response_code(400);
-            $message = [
-                "data" => [],
-                "status" => "Missing parameters in query",
-                "errors" => "Missing 'uid' in query"
-            ];
-            echo json_encode($message);
+            Error::fireMessage(new Exception("Missing 'uid' in query", 406));
             return;
         }
 
@@ -33,7 +28,7 @@ class UserController
             echo $this->userModel->readUser();
         } catch (Exception $e) {
             //usuário não encontrado
-            $this->errorMessage($e);
+            Error::fireMessage($e);
         }
     }
 
@@ -47,14 +42,7 @@ class UserController
             return;
         };
         if (!isset($usuario['password'])) {
-            $message = [
-                "data" => [],
-                "status" => "Missing Parameters",
-                "errors" => "Missing password in payload!"
-            ];
-            http_response_code(400);
-            header('Content-Type: application/json');
-            echo json_encode($message);
+            Error::fireMessage(new Exception('Missing password in payload!', 406));
         }
 
         //setando campos do objeto
@@ -64,7 +52,7 @@ class UserController
         try {
             echo $this->userModel->saveUser();
         } catch (Exception $e) {
-            $this->errorMessage($e);
+            Error::fireMessage($e);
         }
     }
 
@@ -77,20 +65,14 @@ class UserController
         try {
             echo $this->userModel->alterUser();
         } catch (Exception $e) {
-            $this->errorMessage($e);
+            Error::fireMessage($e);
         }
     }
 
     public function delete()
     {
         if (!isset($_GET['uid'])) {
-            http_response_code(400);
-            $message = [
-                "data" => [],
-                "status" => "Missing parameters in query",
-                "errors" => "Missing 'uid' in query"
-            ];
-            echo json_encode($message);
+            Error::fireMessage(new Exception("Missing 'uid' in query", 406));
             return;
         }
 
@@ -100,39 +82,7 @@ class UserController
             $this->userModel->uid = $indice;
             echo $this->userModel->deleteUser();
         } catch (Exception $e) {
-            $this->errorMessage($e);
-        }
-    }
-
-    public function errorMessage(Exception $e)
-    {
-        switch ($e->getCode()) {
-            case 1:
-                $message = [
-                    "data" => [],
-                    "status" => "Not Found",
-                    "errors" => "User not found"
-                ];
-                http_response_code(404);
-                header('Content-Type: application/json');
-                echo json_encode($message);
-                break;
-
-            case 2:
-                $message = [
-                    "data" => [],
-                    "status" => "Conflict",
-                    "errors" => "Email already registered!"
-                ];
-                http_response_code(409);
-                header('Content-Type: application/json');
-                echo json_encode($message);
-                break;
-
-            default:
-                http_response_code(400);
-                throw $e;
-                break;
+            Error::fireMessage($e);
         }
     }
 }

@@ -2,9 +2,8 @@
 
 namespace projetoweb\models;
 
+use projetoweb\utils\Error;
 use Exception;
-use projetoweb\Conexao;
-use projetoweb\utils\Validator;
 use PDO;
 
 class Recipe extends Model
@@ -79,7 +78,7 @@ class Recipe extends Model
             ];
             echo json_encode($message);
         } else {
-            throw new Exception("Recipe not found", 1);
+            throw new Exception("Recipe not found", 404);
         }
     }
 
@@ -110,7 +109,7 @@ class Recipe extends Model
             ];
             echo json_encode($message);
         } else {
-            throw new Exception("Recipe not found", 1);
+            throw new Exception("Recipe not found", 404);
         }
     }
 
@@ -131,7 +130,7 @@ class Recipe extends Model
                 if ($recipe != null) {
                     echo json_encode($recipe);
                 } else {
-                    throw new Exception("No Recipes found", 1);
+                    throw new Exception("No Recipes found", 404);
                 }
 
                 break;
@@ -165,7 +164,7 @@ class Recipe extends Model
                     if ($recipes != null) {
                         echo json_encode($recipes);
                     } else {
-                        throw new Exception("No Recipes found", 1);
+                        throw new Exception("No Recipes found", 404);
                     }
                 } else if ($this->title && $this->category) {
                     try {
@@ -181,7 +180,7 @@ class Recipe extends Model
                     if ($recipes != null) {
                         echo json_encode($recipes);
                     } else {
-                        throw new Exception("No Recipes found", 1);
+                        throw new Exception("No Recipes found", 404);
                     }
                 } else if ($this->title) {
                     try {
@@ -196,15 +195,14 @@ class Recipe extends Model
                     if ($recipes != null) {
                         echo json_encode($recipes);
                     } else {
-                        throw new Exception("No Recipes found", 1);
+                        throw new Exception("No Recipes found", 404);
                     }
                 }
 
                 break;
 
             default:
-                http_response_code(400);
-                echo "Bad Request";
+                Error::fireMessage(new Exception('Bad Request', 400));
                 break;
         }
     }

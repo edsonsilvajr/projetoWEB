@@ -65,10 +65,10 @@ class Auth extends Model
                 ];
                 return json_encode($message);
             } else {
-                throw new Exception('Invalid Password', 3);
+                throw new Exception('Invalid Password', 401);
             }
         } else {
-            throw new Exception('User not found', 1);
+            throw new Exception('User not found', 404);
         }
     }
 

@@ -53,6 +53,7 @@ function Profile() {
 
   useEffect(() => {
     let isMounted = true
+    console.log(user)
     api
       .get('recipe', { params: { getParam: 2, id: user.uid } })
       .then((response) => {

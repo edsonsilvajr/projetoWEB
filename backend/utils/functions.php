@@ -2,6 +2,8 @@
 
 namespace projetoweb\utils;
 
+use Exception;
+
 class Validator
 {
   public static function validate($type, $toBeValidated)
@@ -12,14 +14,7 @@ class Validator
         isset($toBeValidated['gender']) &&
         isset($toBeValidated['date']) &&
         isset($toBeValidated['email']))) {
-        $message = [
-          "data" => [],
-          "status" => "Missing Parameters",
-          "errors" => "Missing Parameters in Request payload!"
-        ];
-        http_response_code(400);
-        header('Content-Type: application/json');
-        echo json_encode($message);
+        Error::fireMessage(new Exception('Missing Parameters in request payload', 406));
         return false;
       }
       return true;
@@ -31,18 +26,26 @@ class Validator
         isset($toBeValidated['url']) &&
         isset($toBeValidated['authorid']) &&
         isset($toBeValidated['author']))) {
-        $message = [
-          "data" => [],
-          "status" => "Missing Parameters",
-          "errors" => "Missing Parameters in Request payload!"
-        ];
-        http_response_code(400);
-        header('Content-Type: application/json');
-        echo json_encode($message);
+        Error::fireMessage(new Exception('Missing Parameters in request payload', 406));
         return false;
       } else {
         return true;
       }
     }
+  }
+}
+
+class Error
+{
+  public static function fireMessage(Exception $e = NULL)
+  {
+    $message = [
+      "data" => [],
+      "status" => $e->getCode(),
+      "errors" => $e->getMessage(),
+    ];
+    http_response_code($e->getCode());
+    header('Content-Type: application/json');
+    echo json_encode($message);
   }
 }

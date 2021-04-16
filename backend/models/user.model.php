@@ -40,7 +40,7 @@ class User extends Model
                 throw $e;
             }
         } else {
-            throw new Exception("User not found", 1);
+            throw new Exception("User not found", 404);
         }
     }
 
@@ -78,7 +78,7 @@ class User extends Model
             return json_encode($message);  //retornar pro controlador
 
         } else {
-            throw new Exception("Error Processing Request", 2);
+            throw new Exception("Email already registered!", 409);
         }
     }
 
@@ -128,7 +128,7 @@ class User extends Model
 
             return json_encode($message);
         } else { // 404 not found
-            throw new Exception("User not found", 1);
+            throw new Exception("User not found", 404);
         }
     }
 
@@ -150,7 +150,7 @@ class User extends Model
             ];
             return json_encode($message);
         } else {
-            throw new Exception("User not found", 1);
+            throw new Exception("User not found", 404);
         }
     }
 }
