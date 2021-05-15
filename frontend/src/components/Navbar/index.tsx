@@ -57,8 +57,11 @@ const Navbar = () => {
           to="/"
           className="log-out"
           onClick={() => {
-            setModalOpen(false)
-            dispatch({ type: 'DELETE_USER' })
+            api.delete('auth').then((res) => {
+              console.log(res)
+              setModalOpen(false)
+              dispatch({ type: 'DELETE_USER' })
+            })
           }}
         >
           Logout
