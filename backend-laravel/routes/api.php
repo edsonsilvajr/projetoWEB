@@ -16,6 +16,8 @@ Route::post('auth', [AuthController::class, 'login']);
 Route::group(['middleware' => 'apiJwt'], function () {
   //recipe routes
   Route::post('recipe', [RecipeController::class, 'store']);
+  Route::post('recipe/{id}', [RecipeController::class, 'storeImage']);
+
   Route::put('recipe', [RecipeController::class, 'update']);
   Route::delete('recipe', [RecipeController::class, 'destroy']);
 

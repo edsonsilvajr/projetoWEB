@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Recipe;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 
 class RecipeController extends Controller
@@ -47,20 +48,6 @@ class RecipeController extends Controller
 
         $newRecipe = json_decode($request->getContent(), true);
 
-        $validation = Validator::make($request->all(), [
-            'author' => 'required',
-            'authorid' => 'required',
-            'ingredients' => 'required',
-            'preparationMode' => 'required',
-            'description' => 'required',
-            'url' => 'required',
-            'title' => 'required',
-        ]);
-
-        if ($validation->fails()) {
-            return response()->json($validation->errors(), 400);
-        }
-
         $recipe->author = $newRecipe['author'];
         $recipe->authorid = $newRecipe['authorid'];
         $recipe->ingredients = $newRecipe['ingredients'];
@@ -72,7 +59,24 @@ class RecipeController extends Controller
 
         return response()->json([
             'Status' => 'Success',
-            'Message' => 'Recipe successfully registered!'
+            'Message' => 'Recipe successfully registered!',
+            'id' =>  $recipe->id,
+        ], 200);
+    }
+
+    public function storeImage(Request $request, $id)
+    {
+        $fileName = time() . '.' . $request->file->extension();
+
+        $request->file->move(public_path('storage'), $fileName);
+
+        $recipe = Recipe::find($id);
+        $recipe->url = "http://10.0.2.2:8000" . Storage::url($fileName);
+        $recipe->update();
+
+        return response()->json([
+            'Status' => 'Success',
+            'Message' => 'Recipe Image successfully registered!',
         ], 200);
     }
 
